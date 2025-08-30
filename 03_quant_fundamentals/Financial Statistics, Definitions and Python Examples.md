@@ -1,8 +1,8 @@
 # 📘 Definitions
 
 # Mean:
-# The average value of a dataset. In finance, it often represents the average return of an asset.
-# Example: If returns are [2%, 3%, 5%], the mean is (2+3+5)/3 = 3.33%.
+<!-- # The average value of a dataset. In finance, it often represents the average return of an asset.
+# Example: If returns are [2%, 3%, 5%], the mean is (2+3+5)/3 = 3.33%. -->
 
 # Variance:
 # A measure of how much the returns deviate from the mean. Higher variance means more fluctuation.
