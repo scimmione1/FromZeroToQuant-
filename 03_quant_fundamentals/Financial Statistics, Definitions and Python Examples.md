@@ -1,52 +1,53 @@
 
+
 # 📘 Financial Statistics: Definitions
 
 ---
 
 ## Mean (Average)
-**Definizione:**
-La media è il valore centrale di un insieme di dati. In finanza rappresenta spesso il rendimento medio di un asset su un periodo.
+**Definition:**
+The mean is the central value of a dataset. In finance, it often represents the average return of an asset over a period.
 
-**Esempio:**
-Se un indice ha rendimenti del 2%, 3% e 5% in tre mesi, la media è (2+3+5)/3 = 3,33%.
-
----
-
-## Variance (Varianza)
-**Definizione:**
-La varianza misura quanto i dati si discostano dalla media. Una varianza elevata indica forti oscillazioni nei rendimenti.
-
-**Utilità:**
-Serve per valutare il rischio o la volatilità di un asset.
+**Example:**
+If an index returns 2%, 3%, and 5% over three months, the mean return is (2+3+5)/3 = 3.33%.
 
 ---
 
-## Standard Deviation (Deviazione Standard)
-**Definizione:**
-È la radice quadrata della varianza. Indica quanto i rendimenti sono dispersi, usando le stesse unità dei dati.
+## Variance
+**Definition:**
+Variance measures how much the data points differ from the mean. A high variance means returns fluctuate a lot.
 
-**Utilità:**
-Usata spesso per misurare la volatilità nei mercati finanziari.
-
----
-
-## Covariance (Covarianza)
-**Definizione:**
-Indica come due asset si muovono insieme. Una covarianza positiva significa che tendono a salire/scendere insieme.
-
-**Utilità:**
-Utile per capire le relazioni tra asset in un portafoglio.
+**Use:**
+It’s useful for understanding risk and volatility.
 
 ---
 
-## Correlation (Correlazione)
-**Definizione:**
-La correlazione è una versione normalizzata della covarianza che varia tra -1 e +1.
+## Standard Deviation
+**Definition:**
+This is the square root of the variance. It tells you how spread out the returns are in the same units as the data.
 
-**Interpretazione:**
-- +1: gli asset si muovono perfettamente insieme
-- -1: si muovono in direzioni opposte
-- 0: nessuna relazione
+**Use:**
+In finance, it’s often used to measure volatility.
 
-**Utilità:**
-Aiuta a valutare il potenziale di diversificazione di un portafoglio.
+---
+
+## Covariance
+**Definition:**
+Covariance shows how two assets move together. If they tend to rise and fall together, covariance is positive.
+
+**Use:**
+It’s key for understanding relationships between assets in a portfolio.
+
+---
+
+## Correlation
+**Definition:**
+Correlation is a normalized version of covariance that ranges from -1 to +1.
+
+**Interpretation:**
+- +1: assets move perfectly together
+- -1: assets move in opposite directions
+- 0: no relationship
+
+**Use:**
+It helps assess diversification potential in a portfolio.
