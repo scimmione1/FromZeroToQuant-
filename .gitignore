@@ -28,6 +28,15 @@ venv.bak/
 # *.xlsx
 # *.json
 
+# Portfolio management generated files
+08_portfolio_management/factors.csv
+08_portfolio_management/portfolio_data.csv
+08_portfolio_management/portfolio_example.xlsx
+08_portfolio_management/portfolio_report.xlsx
+08_portfolio_management/portfolio_report_cleaned.xlsx
+08_portfolio_management/report.xlsx
+08_portfolio_management/top_10_stocks.csv
+
 # IDE
 .vscode/
 .idea/
