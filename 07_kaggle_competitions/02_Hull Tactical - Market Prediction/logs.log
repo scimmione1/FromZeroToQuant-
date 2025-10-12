@@ -15486,3 +15486,10 @@ Name: market_forward_excess_returns, Length: 6293, dtype: float32
 613     0.000205
 Name: market_forward_excess_returns, Length: 6293, dtype: float32
 2025-10-12 11:53:29,992:INFO:get_config() successfully completed......................................
+2025-10-12 11:56:01,282:INFO:Initializing plot_model()
+2025-10-12 11:56:01,283:INFO:plot_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x000001DB542E7C10>, estimator=BayesianRidge(), plot=feature, scale=1, save=False, fold=KFold(n_splits=10, random_state=None, shuffle=False), fit_kwargs={}, plot_kwargs=None, groups=None, feature_name=None, label=False, verbose=False, system=True, display=None, display_format=None)
+2025-10-12 11:56:01,283:INFO:Checking exceptions
+2025-10-12 11:56:01,284:INFO:Preloading libraries
+2025-10-12 11:56:01,284:INFO:Copying training dataset
+2025-10-12 11:56:01,284:INFO:Plot type: feature
+2025-10-12 11:56:01,416:INFO:Visual Rendered Successfully
