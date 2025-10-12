@@ -14254,3 +14254,18 @@ Name: market_forward_excess_returns, Length: 6293, dtype: float32
 613     0.000205
 Name: market_forward_excess_returns, Length: 6293, dtype: float32
 2025-10-12 11:23:10,514:INFO:get_config() successfully completed......................................
+2025-10-12 11:25:25,347:INFO:Initializing interpret_model()
+2025-10-12 11:25:25,347:INFO:interpret_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x000001DB43631E10>, estimator=BayesianRidge(), plot=feature, feature=None, observation=None, use_train_data=False, X_new_sample=None, y_new_sample=None, save=False, kwargs={})
+2025-10-12 11:25:25,347:INFO:Checking exceptions
+2025-10-12 11:26:51,166:INFO:Initializing interpret_model()
+2025-10-12 11:26:51,167:INFO:interpret_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x000001DB43631E10>, estimator=BayesianRidge(), plot=pfi, feature=None, observation=None, use_train_data=False, X_new_sample=None, y_new_sample=None, save=False, kwargs={})
+2025-10-12 11:26:51,167:INFO:Checking exceptions
+2025-10-12 11:26:51,168:ERROR:
+'interpret_community' is a soft dependency and not included in the pycaret installation. Please run: `pip install interpret-community` to install.
+NoneType: None
+2025-10-12 11:27:06,617:INFO:Initializing interpret_model()
+2025-10-12 11:27:06,617:INFO:interpret_model(self=<pycaret.regression.oop.RegressionExperiment object at 0x000001DB43631E10>, estimator=BayesianRidge(), plot=pfi, feature=None, observation=None, use_train_data=False, X_new_sample=None, y_new_sample=None, save=False, kwargs={})
+2025-10-12 11:27:06,617:INFO:Checking exceptions
+2025-10-12 11:27:06,617:ERROR:
+'interpret_community' is a soft dependency and not included in the pycaret installation. Please run: `pip install interpret-community` to install.
+NoneType: None
