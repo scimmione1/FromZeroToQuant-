@@ -14269,3 +14269,6 @@ NoneType: None
 2025-10-12 11:27:06,617:ERROR:
 'interpret_community' is a soft dependency and not included in the pycaret installation. Please run: `pip install interpret-community` to install.
 NoneType: None
+2025-10-12 11:33:12,209:INFO:Initializing get_config()
+2025-10-12 11:33:12,210:INFO:get_config(self=<pycaret.regression.oop.RegressionExperiment object at 0x000001DB43631E10>, variable=X_train)
+2025-10-12 11:33:12,210:INFO:Variable: 'X_train' used to return the transformed values in PyCaret 2.x. From PyCaret 3.x, this will return the raw values. If you need the transformed values, call get_config with 'X_train_transformed' instead.
