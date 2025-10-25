@@ -10,7 +10,7 @@ The analysis consists of four main files examining rebalancing correlations in S
 
 - **File 1**: [`01_The Unintended Consequences of Rebalancing.ipynb`](01_The%20Unintended%20Consequences%20of%20Rebalancing.ipynb) - yFinance data source
 - **File 2**: [`02_The Unintended Consequences of Rebalancing_xl.ipynb`](02_The%20Unintended%20Consequences%20of%20Rebalancing_xl.ipynb) - Excel data source
-- **File 3**: [`03_The Unintended Consequences of Rebalancing_tv.ipynb`] - TradingView data source
+- **File 3**: `03_The Unintended Consequences of Rebalancing_tv.ipynb` - TradingView data source
 - **File 4**: [`04_The Unintended Consequences of Rebalancing_from_xl.ipynb`](04_The%20Unintended%20Consequences%20of%20Rebalancing_from_xl.ipynb) - Alternative Excel implementation, using data from File 2 but Analysis from File 1
 
 ## Research Methodology
