@@ -53,3 +53,8 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# SPY-TLT Rebalancing Analysis Excel Files
+SPY_TLT_Simone (1).xlsx
+SPY_TLT_Simone_scatter_plot.xlsx
+SPY_TLT_Simone.xlsx
