@@ -1,0 +1,9 @@
+Results saved on: 2025-10-26 22:40:33
+================================================================================
+
+          strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
+         VWAP_CDLHAMMER         13.759102             12.359121                 1.399980         4          50.0
+VWAP_CDLMORNINGDOJISTAR          3.812399              0.000000                 3.812399         0           NaN
+
+================================================================================
+Total records: 2
