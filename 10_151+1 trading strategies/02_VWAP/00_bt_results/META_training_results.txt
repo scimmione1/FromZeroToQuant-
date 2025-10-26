@@ -1,4 +1,4 @@
-Results saved on: 2025-10-26 22:33:38
+Results saved on: 2025-10-26 22:42:05
 ================================================================================
 
           strategy_name  Return [%]  # Trades  Win Rate [%]  Sharpe Ratio  Max. Drawdown [%]
