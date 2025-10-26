@@ -1,0 +1,6 @@
+    strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
+   VWAP_CDLTAKURI         88.481044              7.972869                80.508174         6     50.000000
+   VWAP_CDLHAMMER         77.533645              4.966666                72.566978         2     50.000000
+   VWAP_CDLHARAMI         44.047201            -10.768545                54.815746         9     33.333333
+ VWAP_CDLPIERCING         26.510628              0.000000                26.510628         0           NaN
+VWAP_CDLENGULFING         16.137348             36.715543               -20.578195         6     66.666667

@@ -1,0 +1,10 @@
+Results saved on: 2025-10-26 22:33:38
+================================================================================
+
+         strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
+        VWAP_CDLTAKURI          9.734735             27.160145               -17.425410         3    100.000000
+        VWAP_CDLHAMMER          3.180942              5.617998                -2.437056         6     33.333333
+VWAP_CDLINVERTEDHAMMER          1.035814              2.117761                -1.081947         4     50.000000
+
+================================================================================
+Total records: 3
