@@ -58,3 +58,10 @@ Thumbs.db
 SPY_TLT_Simone (1).xlsx
 SPY_TLT_Simone_scatter_plot.xlsx
 SPY_TLT_Simone.xlsx
+
+# SPY-TLT Rebalancing Analysis Notebooks (private)
+09_papers/01_The\ Unintended\ Consequences\ of\ Rebalancing/02_The\ Unintended\ Consequences\ of\ Rebalancing_xl.ipynb
+09_papers/01_The\ Unintended\ Consequences\ of\ Rebalancing/03_The\ Unintended\ Consequences\ of\ Rebalancing_tv.ipynb
+09_papers/01_The\ Unintended\ Consequences\ of\ Rebalancing/07_The\ Unintended\ Consequences\ of\ Rebalancing_from_xl_bt.ipynb
+09_papers/01_The\ Unintended\ Consequences\ of\ Rebalancing/08_SPY_TLT_Rebal_Analysis.ipynb
+09_papers/01_The\ Unintended\ Consequences\ of\ Rebalancing/10_The\ Unintended\ Consequences\ of\ Rebalancing_from_xl_bt.ipynb
