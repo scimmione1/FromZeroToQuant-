@@ -1,0 +1,90 @@
+VWAP STRATEGY OPTIMIZATION RESULTS
+Ticker: META
+Generated on: 2025-10-30 23:13:22
+================================================================================
+
+OPTIMIZATION SUMMARY:
+Total strategies optimized: 3
+Successful optimizations: 3
+Failed optimizations: 0
+
+================================================================================
+
+SUCCESSFUL OPTIMIZATIONS:
+----------------------------------------
+
+1. VWAP_CDLHARAMICROSS
+----------------------
+Original Parameters:
+  ATR Period: 14
+  Stop Loss Multiplier: 1.5
+  Take Profit Multiplier: 3.0
+
+Optimized Parameters:
+  ATR Period: 18
+  Stop Loss Multiplier: 1.0
+  Take Profit Multiplier: 4.0
+
+Optimization Status: Parameters Changed
+
+Optimized Performance:
+  Return: 23.71668397268289 %
+  Sharpe Ratio: 0.44151508527161243
+  Number of Trades: 5
+  Win Rate: 40.0 %
+  Max Drawdown: N/A %
+  Volatility: N/A %
+
+------------------------------------------------------------
+
+2. VWAP_CDLPIERCING
+-------------------
+Original Parameters:
+  ATR Period: 14
+  Stop Loss Multiplier: 1.5
+  Take Profit Multiplier: 3.0
+
+Optimized Parameters:
+  ATR Period: 10
+  Stop Loss Multiplier: 1.0
+  Take Profit Multiplier: 4.0
+
+Optimization Status: Parameters Changed
+
+Optimized Performance:
+  Return: 19.338914180422698 %
+  Sharpe Ratio: 0.7445276711531307
+  Number of Trades: 4
+  Win Rate: 50.0 %
+  Max Drawdown: N/A %
+  Volatility: N/A %
+
+------------------------------------------------------------
+
+3. VWAP_CDLTAKURI
+-----------------
+Original Parameters:
+  ATR Period: 14
+  Stop Loss Multiplier: 1.5
+  Take Profit Multiplier: 3.0
+
+Optimized Parameters:
+  ATR Period: 20
+  Stop Loss Multiplier: 3.0
+  Take Profit Multiplier: 3.5
+
+Optimization Status: Parameters Changed
+
+Optimized Performance:
+  Return: 26.788267510903562 %
+  Sharpe Ratio: 0.4198483094298331
+  Number of Trades: 7
+  Win Rate: 71.42857142857143 %
+  Max Drawdown: N/A %
+  Volatility: N/A %
+
+------------------------------------------------------------
+
+================================================================================
+Total optimizations processed: 35
+File generated: META_optimization_results_20251030_231322.txt
