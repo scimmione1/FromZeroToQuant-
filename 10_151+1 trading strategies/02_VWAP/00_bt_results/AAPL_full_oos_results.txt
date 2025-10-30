@@ -1,12 +1,12 @@
-Results saved on: 2025-10-26 22:38:02
+Results saved on: 2025-10-30 22:49:06
 ================================================================================
 
          strategy_name  Return [%]  # Trades  Win Rate [%]  Sharpe Ratio  Max. Drawdown [%]
-   VWAP_CDLHARAMICROSS   -4.566428         5     40.000000     -0.227345         -21.785802
+VWAP_CDLINVERTEDHAMMER   -5.919475         1      0.000000     -0.860890          -7.636552
+   VWAP_CDLHARAMICROSS    0.423113         0           NaN      0.826822          -0.000000
+        VWAP_CDLHAMMER  -10.794232         4     25.000000     -0.871458         -16.510684
+        VWAP_CDLHARAMI    0.827503         7     42.857143      0.068762         -11.202487
       VWAP_CDLPIERCING    0.000000         0           NaN           NaN          -0.000000
-        VWAP_CDLTAKURI   27.160145         3    100.000000      1.133039          -6.803073
-        VWAP_CDLHAMMER    5.617998         6     33.333333      0.256185          -9.927594
-VWAP_CDLINVERTEDHAMMER    2.117761         4     50.000000      0.124600          -9.420998
 
 ================================================================================
 Total records: 5
