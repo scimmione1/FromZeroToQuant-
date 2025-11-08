@@ -1,0 +1,8 @@
+Results saved on: 2025-11-08 23:30:32
+================================================================================
+
+      strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
+VWAP_CDLMORNINGSTAR          6.646221              8.342478                -1.696257         2          50.0
+
+================================================================================
+Total records: 1
