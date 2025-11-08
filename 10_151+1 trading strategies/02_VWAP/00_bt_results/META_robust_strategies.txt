@@ -1,8 +1,0 @@
-Results saved on: 2025-11-08 00:23:08
-================================================================================
-
-    strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
-VWAP_CDLENGULFING         19.627978             52.731695               -33.103717         7     71.428571
-
-================================================================================
-Total records: 1

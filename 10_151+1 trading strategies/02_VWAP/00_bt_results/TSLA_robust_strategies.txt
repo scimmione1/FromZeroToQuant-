@@ -1,9 +1,0 @@
-Results saved on: 2025-10-30 22:19:07
-================================================================================
-
-      strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
-     VWAP_CDLTAKURI         15.596194             24.729637                -9.133443         3     66.666667
-VWAP_CDLMORNINGSTAR          6.566146              8.119226                -1.553080         2     50.000000
-
-================================================================================
-Total records: 2

@@ -1,2 +1,0 @@
-    strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
-VWAP_CDLENGULFING         16.137348             36.715543               -20.578195         6     66.666667
