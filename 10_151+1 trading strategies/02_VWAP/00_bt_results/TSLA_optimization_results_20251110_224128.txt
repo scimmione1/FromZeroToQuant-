@@ -1,0 +1,90 @@
+VWAP STRATEGY OPTIMIZATION RESULTS
+Ticker: TSLA
+Generated on: 2025-11-10 22:41:28
+================================================================================
+
+OPTIMIZATION SUMMARY:
+Total strategies optimized: 3
+Successful optimizations: 3
+Failed optimizations: 0
+
+================================================================================
+
+SUCCESSFUL OPTIMIZATIONS:
+----------------------------------------
+
+1. VWAP_CDLHARAMICROSS
+----------------------
+Original Parameters:
+  ATR Period: 14
+  Stop Loss Multiplier: 1.5
+  Take Profit Multiplier: 3.0
+
+Optimized Parameters:
+  ATR Period: 16
+  Stop Loss Multiplier: 3.0
+  Take Profit Multiplier: 4.0
+
+Optimization Status: Parameters Changed
+
+Optimized Performance:
+  Return: 177.3953790732118 %
+  Sharpe Ratio: 0.8245757094150461
+  Number of Trades: 13
+  Win Rate: 69.23076923076923 %
+  Max Drawdown: N/A %
+  Volatility: N/A %
+
+------------------------------------------------------------
+
+2. VWAP_CDLPIERCING
+-------------------
+Original Parameters:
+  ATR Period: 14
+  Stop Loss Multiplier: 1.5
+  Take Profit Multiplier: 3.0
+
+Optimized Parameters:
+  ATR Period: 20
+  Stop Loss Multiplier: 1.0
+  Take Profit Multiplier: 2.5
+
+Optimization Status: Parameters Changed
+
+Optimized Performance:
+  Return: 53.338177095825145 %
+  Sharpe Ratio: 0.7307185210055943
+  Number of Trades: 5
+  Win Rate: 60.0 %
+  Max Drawdown: N/A %
+  Volatility: N/A %
+
+------------------------------------------------------------
+
+3. VWAP_CDLTAKURI
+-----------------
+Original Parameters:
+  ATR Period: 14
+  Stop Loss Multiplier: 1.5
+  Take Profit Multiplier: 3.0
+
+Optimized Parameters:
+  ATR Period: 16
+  Stop Loss Multiplier: 3.0
+  Take Profit Multiplier: 4.0
+
+Optimization Status: Parameters Changed
+
+Optimized Performance:
+  Return: 72.4877371120606 %
+  Sharpe Ratio: 0.4625931960812115
+  Number of Trades: 5
+  Win Rate: 60.0 %
+  Max Drawdown: N/A %
+  Volatility: N/A %
+
+------------------------------------------------------------
+
+================================================================================
+Total optimizations processed: 35
+File generated: TSLA_optimization_results_20251110_224128.txt
