@@ -1,12 +1,12 @@
-Results saved on: 2025-11-08 21:50:06
+Results saved on: 2025-11-10 23:22:54
 ================================================================================
 
-      strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
-  VWAP_CDLENGULFING         26.995917             14.529993                12.465923         7     57.142857
-VWAP_CDLHARAMICROSS         25.998971             -2.132165                28.131137         1      0.000000
-     VWAP_CDLHARAMI         12.918964             13.386290                -0.467326         7     57.142857
-     VWAP_CDLHAMMER          2.523305              6.596171                -4.072865         3     33.333333
-   VWAP_CDLPIERCING         -5.215216              6.093225               -11.308441         1    100.000000
+        strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
+    VWAP_CDLENGULFING         26.995917             14.529993                12.465923         7     57.142857
+  VWAP_CDLHARAMICROSS         25.998971             -2.132165                28.131137         1      0.000000
+       VWAP_CDLHARAMI         12.918964             13.386290                -0.467326         7     57.142857
+VWAP_CDLSTICKSANDWICH         12.307701              0.000000                12.307701         0           NaN
+  VWAP_CDLMATCHINGLOW          9.688561              3.664424                 6.024137         2     50.000000
 
 ================================================================================
 Total records: 5
