@@ -1,0 +1,32 @@
+Results saved on: 2025-11-11 22:29:47
+================================================================================
+
+           strategy_name  Return [%]  # Trades  Win Rate [%]  Sharpe Ratio  Max. Drawdown [%]
+          VWAP_CDLHAMMER   19.919736        15     53.333333      0.362131         -20.679945
+  VWAP_CDLINVERTEDHAMMER   -0.767445        13     46.153846     -0.016093         -23.020021
+     VWAP_CDLMORNINGSTAR    6.269418         4     50.000000      0.252114          -7.976800
+ VWAP_CDLMORNINGDOJISTAR    0.000000         0           NaN           NaN          -0.000000
+       VWAP_CDLENGULFING    9.683301        23     47.826087      0.157865         -24.573929
+        VWAP_CDLPIERCING   -2.482989         1      0.000000     -0.115288          -8.754022
+          VWAP_CDLHARAMI   25.737150        31     51.612903      0.330955         -25.771539
+     VWAP_CDLHARAMICROSS   19.326147         9     55.555556      0.513520         -10.471988
+          VWAP_CDLTAKURI    6.600586        16     43.750000      0.161028         -15.171024
+  VWAP_CDL3WHITESOLDIERS   -3.607211         1      0.000000     -0.235183          -9.539599
+VWAP_CDLRISEFALL3METHODS    0.000000         0           NaN           NaN          -0.000000
+         VWAP_CDLMATHOLD    0.000000         0           NaN           NaN          -0.000000
+ VWAP_CDLSEPARATINGLINES    2.573173         1    100.000000      0.430283          -1.279184
+       VWAP_CDLTASUKIGAP   -0.782995         4     50.000000     -0.027457         -10.777837
+   VWAP_CDLABANDONEDBABY    0.000000         0           NaN           NaN          -0.000000
+    VWAP_CDLLADDERBOTTOM   -6.772027         3      0.000000     -0.304943         -16.178254
+     VWAP_CDLMATCHINGLOW   46.286755        12     66.666667      0.911602          -6.054011
+    VWAP_CDLUNIQUE3RIVER  -15.612422         3      0.000000     -0.846290         -17.709784
+         VWAP_CDL3INSIDE  -19.496722        14     28.571429     -0.727501         -28.903812
+        VWAP_CDL3OUTSIDE    5.997087        13     46.153846      0.122116         -13.373170
+        VWAP_CDLBELTHOLD  -36.332832        46     32.608696     -0.629527         -54.540107
+       VWAP_CDLBREAKAWAY    0.000000         0           NaN           NaN          -0.000000
+         VWAP_CDLKICKING    0.000000         0           NaN           NaN          -0.000000
+ VWAP_CDLKICKINGBYLENGTH    0.000000         0           NaN           NaN          -0.000000
+   VWAP_CDLSTICKSANDWICH   19.207972         3    100.000000      0.702091          -5.645896
+
+================================================================================
+Total records: 25
