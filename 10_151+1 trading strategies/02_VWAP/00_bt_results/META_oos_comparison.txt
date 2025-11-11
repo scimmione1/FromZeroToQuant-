@@ -1,4 +1,4 @@
-Results saved on: 2025-11-11 22:01:44
+Results saved on: 2025-11-11 22:39:25
 ================================================================================
 
       strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
