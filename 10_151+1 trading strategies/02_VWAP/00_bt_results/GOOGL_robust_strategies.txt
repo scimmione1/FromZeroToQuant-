@@ -1,0 +1,9 @@
+Results saved on: 2025-11-12 23:17:19
+================================================================================
+
+      strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
+     VWAP_CDLHARAMI         12.918964             13.386290                -0.467326         7     57.142857
+VWAP_CDLMATCHINGLOW          9.688561              3.664424                 6.024137         2     50.000000
+
+================================================================================
+Total records: 2
