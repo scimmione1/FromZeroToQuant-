@@ -1,12 +1,12 @@
-Results saved on: 2025-11-18 19:54:00
+Results saved on: 2025-11-18 22:10:25
 ================================================================================
 
          strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
-   VWAP_CDLMATCHINGLOW         35.091205              5.389169                29.702036         4          50.0
-VWAP_CDLINVERTEDHAMMER         29.794404             -5.919469                35.713872         1           0.0
-   VWAP_CDLHARAMICROSS         23.744648              8.641108                15.103539         2         100.0
-      VWAP_CDL3OUTSIDE         23.026181             12.004298                11.021883         3         100.0
-     VWAP_CDLTASUKIGAP         21.361923              0.000000                21.361923         0           NaN
+VWAP_CDLINVERTEDHAMMER         27.443602             -8.997929                36.441532         2      0.000000
+   VWAP_CDLMATCHINGLOW         25.714222              2.461683                23.252538         5     40.000000
+      VWAP_CDL3OUTSIDE         25.234934             -5.434222                30.669155         5     60.000000
+   VWAP_CDLHARAMICROSS         23.751668              5.625136                18.126532         3     66.666667
+        VWAP_CDLHARAMI         16.814224              3.521944                13.292280        12     50.000000
 
 ================================================================================
 Total records: 5

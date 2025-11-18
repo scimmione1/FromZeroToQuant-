@@ -1,0 +1,12 @@
+Results saved on: 2025-11-18 22:10:59
+================================================================================
+
+        strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
+  VWAP_CDLMATCHINGLOW         19.429291             -5.936726                25.366017         2           0.0
+  VWAP_CDLMORNINGSTAR         15.950063              0.000000                15.950063         0           NaN
+     VWAP_CDLPIERCING          6.638462              5.083858                 1.554604         1         100.0
+VWAP_CDLSTICKSANDWICH          5.497908             -3.240172                 8.738080         1           0.0
+      VWAP_CDL3INSIDE          2.050214              5.002107                -2.951892         1         100.0
+
+================================================================================
+Total records: 5
