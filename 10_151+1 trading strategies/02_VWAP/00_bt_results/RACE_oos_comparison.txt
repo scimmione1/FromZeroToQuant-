@@ -1,0 +1,12 @@
+Results saved on: 2025-11-18 22:53:22
+================================================================================
+
+       strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
+      VWAP_CDLHARAMI         26.036319            -12.450572                38.486891         9     22.222222
+VWAP_CDLUNIQUE3RIVER         11.791516             -4.123711                15.915226         1      0.000000
+VWAP_CDLLADDERBOTTOM         11.790730             -2.831701                14.622431         1      0.000000
+ VWAP_CDLHARAMICROSS         11.773076            -14.170764                25.943840         4      0.000000
+      VWAP_CDLHAMMER         11.489837             -7.401419                18.891256         6     50.000000
+
+================================================================================
+Total records: 5
