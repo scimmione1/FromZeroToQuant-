@@ -1,0 +1,90 @@
+VWAP STRATEGY OPTIMIZATION RESULTS
+Ticker: MSFT
+Generated on: 2025-11-18 22:30:47
+================================================================================
+
+OPTIMIZATION SUMMARY:
+Total strategies optimized: 3
+Successful optimizations: 3
+Failed optimizations: 0
+
+================================================================================
+
+SUCCESSFUL OPTIMIZATIONS:
+----------------------------------------
+
+1. VWAP_CDLMATCHINGLOW
+----------------------
+Original Parameters:
+  ATR Period: 14
+  Stop Loss Multiplier: 1.5
+  Take Profit Multiplier: 3.0
+
+Optimized Parameters:
+  ATR Period: 20
+  Stop Loss Multiplier: 1.0
+  Take Profit Multiplier: 3.5
+
+Optimization Status: Parameters Changed
+
+Optimized Performance:
+  Return: 66.89511729463592 %
+  Sharpe Ratio: 1.301380659752901
+  Number of Trades: 11
+  Win Rate: 63.63636363636363 %
+  Max Drawdown: N/A %
+  Volatility: N/A %
+
+------------------------------------------------------------
+
+2. VWAP_CDLHARAMICROSS
+----------------------
+Original Parameters:
+  ATR Period: 14
+  Stop Loss Multiplier: 1.5
+  Take Profit Multiplier: 3.0
+
+Optimized Parameters:
+  ATR Period: 10
+  Stop Loss Multiplier: 1.0
+  Take Profit Multiplier: 4.0
+
+Optimization Status: Parameters Changed
+
+Optimized Performance:
+  Return: 34.61433048631786 %
+  Sharpe Ratio: 0.8117420430324681
+  Number of Trades: 7
+  Win Rate: 57.14285714285714 %
+  Max Drawdown: N/A %
+  Volatility: N/A %
+
+------------------------------------------------------------
+
+3. VWAP_CDLHARAMI
+-----------------
+Original Parameters:
+  ATR Period: 14
+  Stop Loss Multiplier: 1.5
+  Take Profit Multiplier: 3.0
+
+Optimized Parameters:
+  ATR Period: 10
+  Stop Loss Multiplier: 1.8
+  Take Profit Multiplier: 4.0
+
+Optimization Status: Parameters Changed
+
+Optimized Performance:
+  Return: 52.083462647879905 %
+  Sharpe Ratio: 0.6010340138435216
+  Number of Trades: 27
+  Win Rate: 40.74074074074074 %
+  Max Drawdown: N/A %
+  Volatility: N/A %
+
+------------------------------------------------------------
+
+================================================================================
+Total optimizations processed: 35
+File generated: MSFT_optimization_results_20251118_223047.txt

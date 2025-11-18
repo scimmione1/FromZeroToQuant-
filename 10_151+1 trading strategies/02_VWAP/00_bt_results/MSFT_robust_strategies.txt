@@ -1,0 +1,8 @@
+Results saved on: 2025-11-18 22:30:37
+================================================================================
+
+ strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
+VWAP_CDLHAMMER         17.217233             12.869657                 4.347576         6     66.666667
+
+================================================================================
+Total records: 1
