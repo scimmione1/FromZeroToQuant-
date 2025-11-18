@@ -1,32 +1,32 @@
-Results saved on: 2025-11-18 19:43:59
+Results saved on: 2025-11-18 22:24:13
 ================================================================================
 
            strategy_name  Return [%]  # Trades  Win Rate [%]  Sharpe Ratio  Max. Drawdown [%]
-          VWAP_CDLHAMMER    3.339642        11     45.454545      0.074753         -16.713808
-  VWAP_CDLINVERTEDHAMMER   -1.448243         8     25.000000     -0.033508         -21.254875
-     VWAP_CDLMORNINGSTAR   -0.148921         3     33.333333     -0.006899          -6.540783
- VWAP_CDLMORNINGDOJISTAR   -4.044223         1      0.000000     -0.803838          -4.044223
-       VWAP_CDLENGULFING  -18.716703        21     33.333333     -0.341706         -35.557401
-        VWAP_CDLPIERCING   11.452113         4     50.000000      0.544571          -7.418864
-          VWAP_CDLHARAMI  -22.332632        24     33.333333     -0.266123         -43.807654
-     VWAP_CDLHARAMICROSS   15.200875         5     40.000000      0.287220         -12.402611
-          VWAP_CDLTAKURI    7.790333         9     44.444444      0.150120         -10.640771
+          VWAP_CDLHAMMER   -0.210590         9     44.444444     -0.005222         -16.713781
+  VWAP_CDLINVERTEDHAMMER   -6.043216         7     28.571429     -0.160313         -21.254855
+     VWAP_CDLMORNINGSTAR   -5.911669         2      0.000000     -0.644948          -6.540784
+ VWAP_CDLMORNINGDOJISTAR   -4.044234         1      0.000000     -0.830882          -4.044234
+       VWAP_CDLENGULFING  -27.480229        20     30.000000     -0.596021         -35.557349
+        VWAP_CDLPIERCING   11.452094         4     50.000000      0.562207          -7.418891
+          VWAP_CDLHARAMI  -17.697418        21     33.333333     -0.218980         -43.807681
+     VWAP_CDLHARAMICROSS   15.200862         5     40.000000      0.296388         -12.402613
+          VWAP_CDLTAKURI    9.891901         9     44.444444      0.196328         -10.211520
   VWAP_CDL3WHITESOLDIERS    0.000000         0           NaN           NaN          -0.000000
 VWAP_CDLRISEFALL3METHODS    0.000000         0           NaN           NaN          -0.000000
          VWAP_CDLMATHOLD    0.000000         0           NaN           NaN          -0.000000
- VWAP_CDLSEPARATINGLINES    6.063886         2     50.000000      0.327604          -5.036324
-       VWAP_CDLTASUKIGAP    7.482791         1    100.000000      0.429078          -5.251520
+ VWAP_CDLSEPARATINGLINES    6.063897         2     50.000000      0.338335          -5.036333
+       VWAP_CDLTASUKIGAP    7.482773         1    100.000000      0.443093          -5.251529
    VWAP_CDLABANDONEDBABY    0.000000         0           NaN           NaN          -0.000000
-    VWAP_CDLLADDERBOTTOM    2.983650         2     50.000000      0.168772          -6.639336
-     VWAP_CDLMATCHINGLOW  -32.546520        11     27.272727     -0.568049         -42.318409
-    VWAP_CDLUNIQUE3RIVER  -13.425873         1      0.000000     -0.637567         -13.425873
-         VWAP_CDL3INSIDE   16.920818        10     40.000000      0.242450         -17.292351
-        VWAP_CDL3OUTSIDE   -7.790397        12     33.333333     -0.174217         -31.133659
-        VWAP_CDLBELTHOLD   38.783954        30     46.666667      0.439198         -24.068506
+    VWAP_CDLLADDERBOTTOM    2.983642         2     50.000000      0.174337          -6.639346
+     VWAP_CDLMATCHINGLOW  -24.683303        10     30.000000     -0.439373         -35.594345
+    VWAP_CDLUNIQUE3RIVER    0.000000         0           NaN           NaN          -0.000000
+         VWAP_CDL3INSIDE   19.592175         9     44.444444      0.293665         -17.292331
+        VWAP_CDL3OUTSIDE  -11.316248        12     33.333333     -0.274674         -31.133649
+        VWAP_CDLBELTHOLD   23.773284        29     44.827586      0.314188         -24.068512
        VWAP_CDLBREAKAWAY    0.000000         0           NaN           NaN          -0.000000
          VWAP_CDLKICKING    0.000000         0           NaN           NaN          -0.000000
  VWAP_CDLKICKINGBYLENGTH    0.000000         0           NaN           NaN          -0.000000
-   VWAP_CDLSTICKSANDWICH   -7.012946         2      0.000000     -0.436714         -10.884211
+   VWAP_CDLSTICKSANDWICH   -7.012937         2      0.000000     -0.451478         -10.884202
 
 ================================================================================
 Total records: 25
