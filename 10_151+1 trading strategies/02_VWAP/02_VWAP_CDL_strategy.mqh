@@ -4,17 +4,18 @@
 #property strict
 
 // === Parameters generali ===
-extern int    MagicNumber      = 22222;
-extern double RiskPercent      = 1.0;      // % risk per trade
-extern double MaxLot = 0.1;           // Lotto massimo consentito
-extern bool UseFixedLot = true;      // true = usa lotto fisso, false = calcolo percentuale
-extern double FixedLot = 0.05;        // Lotto fisso quando UseFixedLot = true
+extern int    MagicNumber       = 253;      // Magic Number EA
+extern double AccountRisk       = 0.01;     // Account risk per trade
+extern double RiskPercent       = 1.0;      // % risk per trade
+extern double MaxLot            = 0.1;      // Maximum allowed lot
+extern bool UseFixedLot         = true;     // true = use fixed lot, false = percentage calculation
+extern double FixedLot          = 0.05;     // Fixed lot when UseFixedLot = true
 
-// === Parameters ATR dinamico ===
-extern int    ATR_Period       = 14;
-extern double ATR_Mult_SL      = 2.0;
-extern double ATR_Mult_TP      = 3.0;
-extern int Slippage         = 3;
+// === Dynamic ATR Parameters ===
+extern int    ATR_Period        = 14;
+extern double ATR_Mult_SL       = 2.0;
+extern double ATR_Mult_TP       = 3.0;
+extern int Slippage             = 3;
 
 // === CDL Patterns ===
 //Bullish reversal patterns
