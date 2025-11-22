@@ -144,14 +144,101 @@ void GetActiveCandlePattern(bool &isBullish)
 //+------------------------------------------------------------------+
 //| CDLMORNINGSTAR Pattern Detection Function                        |
 //+------------------------------------------------------------------+
+bool CDLMORNINGSTAR(int shift = 0)
+{
+   // We need at least 3 bars (current, -1, -2)
+   if(Bars < shift + 3)
+      return false;
+
+   // Get bar data for the 3 candles
+   // Current bar (shift + 0)
+   double O0 = Open[shift];
+   double C0 = Close[shift];
+   double H0 = High[shift];
+   double L0 = Low[shift];
+   
+   // Previous bar (shift + 1)
+   double O1 = Open[shift + 1];
+   double C1 = Close[shift + 1];
+   double H1 = High[shift + 1];
+   double L1 = Low[shift + 1];
+   
+   // Two bars ago (shift + 2)
+   double O2 = Open[shift + 2];
+   double C2 = Close[shift + 2];
+   double H2 = High[shift + 2];
+   double L2 = Low[shift + 2];
+
+   // Morning Star pattern conditions
+   bool condition1 = (O2 > C2);                                    // First candle is bearish
+   bool condition2 = (5 * (O2 - C2) > 3 * (H2 - L2));             // First candle has a large bearish body
+   bool condition3 = (C2 > O1);                                    // Second candle opens below first close
+   bool condition4 = (2 * MathAbs(O1 - C1) < MathAbs(O2 - C2));   // Second candle has small body
+   bool condition5 = (H1 - L1 > 3 * MathAbs(C1 - O1));            // Second candle has long shadows
+   bool condition6 = (C0 > O0);                                    // Third candle is bullish
+   bool condition7 = (O0 > O1);                                    // Third candle opens above second open
+   bool condition8 = (O0 > C1);                                    // Third candle opens above second close
+
+   // Return true if all conditions are met
+   if(condition1 && condition2 && condition3 && condition4 && 
+      condition5 && condition6 && condition7 && condition8)
+      return true;
+
+   return false;
+}
 
 //+------------------------------------------------------------------+
 //| CDLMORNINGDOJISTAR Pattern Detection Function                    |
 //+------------------------------------------------------------------+
+/*
+// simple Doji detection function:
+bool isDoji(int index, const MqlRates &rates[])
+{
+   if(index >= ArraySize(rates))
+      return false;
+
+   double open  = rates[index].open;
+   double close = rates[index].close;
+   double high  = rates[index].high;
+   double low   = rates[index].low;
+
+   double body  = MathAbs(close - open);
+   double range = high - low;
+
+   // Define the ratio threshold for Doji
+   double dojiRatio = 0.1; // 10% of total range
+
+   if(body <= (range * dojiRatio))
+      return true;
+
+   return false;
+}
+*/
 
 //+------------------------------------------------------------------+
 //| CDLENGULFING Pattern Detection Function                          |
 //+------------------------------------------------------------------+
+bool CDLENGULFING(int index, const MqlRates &rates[])
+{
+   // Make sure we have at least 2 bars from 'index'
+   if(index+1 >= ArraySize(rates))
+      return false;
+
+   double prevOpen  = rates[index+1].open;
+   double prevClose = rates[index+1].close;
+   double currOpen  = rates[index].open;
+   double currClose = rates[index].close;
+
+   // Check if current candle bullish and fully engulfs previous body
+   if(currClose > currOpen &&       // Current bullish
+      prevClose < prevOpen &&       // Previous bearish
+      currOpen < prevClose &&       // Current's open below previous close
+      currClose > prevOpen)         // Current's close above previous open
+   {
+      return true;
+   }
+   return false;
+}
 
 //+------------------------------------------------------------------+
 //| CDLPIERCING Pattern Detection Function                           |
@@ -160,6 +247,54 @@ void GetActiveCandlePattern(bool &isBullish)
 //+------------------------------------------------------------------+
 //| CDLHARAMI Pattern Detection Function                             |
 //+------------------------------------------------------------------+
+bool CDLHARAMI(int shift = 0)
+{
+   // We need at least 11 bars for the 10-period average
+   if(Bars < shift + 11)
+      return false;
+
+   // Current bar (shift + 0)
+   double O0 = Open[shift];
+   double C0 = Close[shift];
+   double H0 = High[shift];
+   double L0 = Low[shift];
+   
+   // Previous bar (shift + 1)
+   double O1 = Open[shift + 1];
+   double C1 = Close[shift + 1];
+   double H1 = High[shift + 1];
+   double L1 = Low[shift + 1];
+
+   // Calculate 10-period average of High and Low (shifted by 1)
+   // AVGH10_1 = Average of High from bars [shift+2] to [shift+11]
+   // AVGL10_1 = Average of Low from bars [shift+2] to [shift+11]
+   double sumHigh = 0.0;
+   double sumLow = 0.0;
+   
+   for(int i = shift + 2; i <= shift + 11; i++)
+   {
+      sumHigh += High[i];
+      sumLow += Low[i];
+   }
+   
+   double AVGH10_1 = sumHigh / 10.0;
+   double AVGL10_1 = sumLow / 10.0;
+
+   // Harami pattern conditions
+   bool condition1 = (10 * (O1 - C1) >= 7 * (H1 - L1));              // Previous candle has large bearish body
+   bool condition2 = (H1 - L1 >= AVGH10_1 - AVGL10_1);               // Previous candle range >= average range
+   bool condition3 = (C0 > O0);                                       // Current candle is bullish
+   bool condition4 = (O0 > C1);                                       // Current open above previous close
+   bool condition5 = (O1 > C0);                                       // Previous open above current close
+   bool condition6 = (6 * (O1 - C1) >= 10 * (C0 - O0));             // Current candle is smaller (fits inside previous)
+
+   // Return true if all conditions are met
+   if(condition1 && condition2 && condition3 && condition4 && 
+      condition5 && condition6)
+      return true;
+
+   return false;
+}
 
 //+------------------------------------------------------------------+
 //| CDLHARAMICROSS Pattern Detection Function                        |
