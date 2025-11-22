@@ -1,9 +1,0 @@
-Results saved on: 2025-11-18 22:24:13
-================================================================================
-
-   strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
-VWAP_CDLBELTHOLD         23.773284             15.162201                 8.611084        13     46.153846
-  VWAP_CDLTAKURI          9.891901             23.887930               -13.996028         4     75.000000
-
-================================================================================
-Total records: 2
