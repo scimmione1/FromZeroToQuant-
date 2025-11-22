@@ -10,6 +10,7 @@ extern double RiskPercent       = 1.0;      // % risk per trade
 extern double MaxLot            = 0.1;      // Maximum allowed lot
 extern bool UseFixedLot         = true;     // true = use fixed lot, false = percentage calculation
 extern double FixedLot          = 0.05;     // Fixed lot when UseFixedLot = true
+extern int   VWAP_Period        = 14;       // VWAP calculation period
 
 // === Dynamic ATR Parameters ===
 extern int    ATR_Period        = 14;
@@ -127,7 +128,7 @@ void GetActiveCandlePattern(bool &isBullish)
    else if(CDLSTICKSANDWICH && iCandlestickPattern(NULL,0,0) == 25) isBullish = true;
    // Add other patterns as needed
 
-   return
+   return ;
 
    
 }
@@ -167,20 +168,25 @@ void OnTick()
    if(Time[0] == lastCandle) return;
    lastCandle = Time[0];
 
-   // === Market Open condition (skip closure hours) ===
-   if(hour < 1 || hour > 20) return;
+    // === VWAP Calculation ===
+    double vwap = CalculateVWAP(VWAP_Period); 
 
-   // === Gap Up condition ===
-   double gapPct = (Open[0] - Close[1]) / Close[1];
-   if(gapPct >= gap && TradeDayOfWeek() && IsTradeAllowed())
-   {
-      // Avoid multiple trades
-      if(TradesCount(OP_BUY) == 0)
-      {
-         double atr = iATR(NULL, 0, ATR_Period, 0);
-         double sl = Ask - ATR_Mult_SL * atr;
-         double tp = Ask + ATR_Mult_TP * atr;
-         double lot = CalculateLotSize(sl);
+    // === Entry Condition: Ysterday's Close higher than VWAP and CDL Pattern is Bullish ===
+    double yesterdayClose = iClose(NULL, 0, 1);
+    if(yesterdayClose > vwap)
+    {
+      // === Check for Bullish Candle Pattern ===
+      bool isBullish = false;
+      GetActiveCandlePattern(isBullish);
+
+
+    // === Calculate ATR, SL, TP and Lot Size ===
+    double atr = iATR(NULL, 0, ATR_Period, 0);
+    double sl = Bid - ATR_Mult_SL * atr;
+    double tp = Bid + ATR_Mult_TP * atr;
+    double lot = CalculateLotSize(sl);
+
+
 
          RefreshRates();
          int ticket = OrderSend(Symbol(), OP_BUY, lot, Ask, Slippage, sl, tp,
