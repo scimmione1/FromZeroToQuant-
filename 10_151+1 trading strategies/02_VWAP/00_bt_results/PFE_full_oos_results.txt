@@ -1,0 +1,12 @@
+Results saved on: 2025-11-22 21:54:09
+================================================================================
+
+          strategy_name  Return [%]  # Trades  Win Rate [%]  Sharpe Ratio  Max. Drawdown [%]
+         VWAP_CDLTAKURI    5.100759         4     50.000000      0.477887          -6.688522
+       VWAP_CDLBELTHOLD  -13.541424         7     14.285714     -0.999534         -18.410278
+    VWAP_CDLMORNINGSTAR    0.000000         0           NaN           NaN          -0.000000
+VWAP_CDLMORNINGDOJISTAR    0.000000         0           NaN           NaN          -0.000000
+VWAP_CDLSEPARATINGLINES    0.000000         0           NaN           NaN          -0.000000
+
+================================================================================
+Total records: 5

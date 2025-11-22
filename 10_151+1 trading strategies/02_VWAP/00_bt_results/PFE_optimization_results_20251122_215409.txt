@@ -1,0 +1,28 @@
+VWAP STRATEGY OPTIMIZATION RESULTS
+Ticker: PFE
+Generated on: 2025-11-22 21:54:09
+================================================================================
+
+OPTIMIZATION SUMMARY:
+Total strategies optimized: 3
+Successful optimizations: 0
+Failed optimizations: 3
+
+================================================================================
+
+
+FAILED OPTIMIZATIONS:
+----------------------------------------
+
+1. VWAP_CDLTAKURI
+   Error: name 'verbose' is not defined
+
+2. VWAP_CDLBELTHOLD
+   Error: name 'verbose' is not defined
+
+3. VWAP_CDLMORNINGSTAR
+   Error: name 'verbose' is not defined
+
+================================================================================
+Total optimizations processed: 3
+File generated: PFE_optimization_results_20251122_215409.txt
