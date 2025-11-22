@@ -50,3 +50,45 @@ extern bool CDLBREAKAWAY           = false;
 extern bool CDLKICKING             = false;
 extern bool CDLKICKINGBYLENGTH     = false;
 extern bool CDLSTICKSANDWICH       = false;
+
+//+------------------------------------------------------------------+
+//| Dynamic lot calculation based on risk                            |
+//+------------------------------------------------------------------+
+double CalculateLotSize(double stopLossPips)
+{
+   if (UseFixedLot)
+      return MathMin(FixedLot, MaxLot); // Use fixed lot, limited to MaxLot
+
+   double riskAmount = AccountBalance() * (RiskPercent / 100.0);
+   double lotSize = 0.0;
+   double pipValue = MarketInfo(Symbol(), MODE_TICKVALUE);
+   double tickSize = MarketInfo(Symbol(), MODE_TICKSIZE);
+   double pipPerLot = pipValue / tickSize * Point;
+
+   if (stopLossPips > 0)
+      lotSize = riskAmount / (stopLossPips * pipPerLot);
+   else
+      lotSize = 0.01;
+
+   // Limit the maximum lot size anyway
+   lotSize = MathMin(lotSize, MaxLot);
+   return NormalizeDouble(lotSize, 2);
+}
+
+//+------------------------------------------------------------------+
+//| Function to close all open positions                             |
+//+------------------------------------------------------------------+
+void CloseAllPositions()
+{
+   for (int i = OrdersTotal() - 1; i >= 0; i--)
+   {
+      if (OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+      {
+         int type = OrderType();
+         if (type == OP_BUY)
+            OrderClose(OrderTicket(), OrderLots(), Bid, 3, clrRed);
+         else if (type == OP_SELL)
+            OrderClose(OrderTicket(), OrderLots(), Ask, 3, clrRed);
+      }
+   }
+}
