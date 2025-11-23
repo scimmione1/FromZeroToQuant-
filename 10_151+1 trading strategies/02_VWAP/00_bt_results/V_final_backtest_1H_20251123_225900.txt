@@ -1,0 +1,60 @@
+FINAL BACKTEST RESULTS - 1H TIMEFRAME
+Ticker: V
+Generated on: 2025-11-23 22:59:00
+================================================================================
+
+SUMMARY:
+Total strategies tested: 4
+Successful backtests: 4
+Failed backtests: 0
+
+================================================================================
+
+SUCCESSFUL STRATEGIES:
+--------------------------------------------------------------------------------
+
+1. VWAP_CDLPIERCING
+-------------------
+  Return [%]: 0.97%
+  # Trades: 1
+  Win Rate [%]: 100.00%
+  Sharpe Ratio: 0.686
+  Max. Drawdown [%]: -0.22%
+
+2. VWAP_CDLMORNINGSTAR
+----------------------
+  Return [%]: -4.61%
+  # Trades: 9
+  Win Rate [%]: 22.22%
+  Sharpe Ratio: -0.840
+  Max. Drawdown [%]: -6.62%
+
+3. VWAP_CDL3INSIDE
+------------------
+  Return [%]: -4.62%
+  # Trades: 17
+  Win Rate [%]: 47.06%
+  Sharpe Ratio: -0.555
+  Max. Drawdown [%]: -9.59%
+
+4. VWAP_CDLMATCHINGLOW
+----------------------
+  Return [%]: -6.01%
+  # Trades: 45
+  Win Rate [%]: 40.00%
+  Sharpe Ratio: -0.427
+  Max. Drawdown [%]: -11.50%
+
+
+================================================================================
+BEST PERFORMING STRATEGY:
+Strategy: VWAP_CDLPIERCING
+Return: 0.97%
+Sharpe Ratio: 0.686
+Number of Trades: 1
+================================================================================
+
+================================================================================
+Total strategies: 4
+Timeframe: 1H
+File generated: V_final_backtest_1H_20251123_225900.txt
