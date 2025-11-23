@@ -1,0 +1,60 @@
+FINAL BACKTEST RESULTS - 4H TIMEFRAME
+Ticker: NVDA
+Generated on: 2025-11-23 22:36:16
+================================================================================
+
+SUMMARY:
+Total strategies tested: 4
+Successful backtests: 4
+Failed backtests: 0
+
+================================================================================
+
+SUCCESSFUL STRATEGIES:
+--------------------------------------------------------------------------------
+
+1. VWAP_CDLHARAMI
+-----------------
+  Return [%]: 72.86%
+  # Trades: 38
+  Win Rate [%]: 52.63%
+  Sharpe Ratio: 0.864
+  Max. Drawdown [%]: -31.65%
+
+2. VWAP_CDLENGULFING
+--------------------
+  Return [%]: 1.38%
+  # Trades: 38
+  Win Rate [%]: 39.47%
+  Sharpe Ratio: 0.023
+  Max. Drawdown [%]: -21.09%
+
+3. VWAP_CDLBELTHOLD
+-------------------
+  Return [%]: -8.03%
+  # Trades: 57
+  Win Rate [%]: 38.60%
+  Sharpe Ratio: -0.132
+  Max. Drawdown [%]: -36.51%
+
+4. VWAP_CDLTAKURI
+-----------------
+  Return [%]: -16.86%
+  # Trades: 32
+  Win Rate [%]: 34.38%
+  Sharpe Ratio: -0.389
+  Max. Drawdown [%]: -44.63%
+
+
+================================================================================
+BEST PERFORMING STRATEGY:
+Strategy: VWAP_CDLHARAMI
+Return: 72.86%
+Sharpe Ratio: 0.864
+Number of Trades: 38
+================================================================================
+
+================================================================================
+Total strategies: 4
+Timeframe: 4H
+File generated: NVDA_final_backtest_4H_20251123_223616.txt
