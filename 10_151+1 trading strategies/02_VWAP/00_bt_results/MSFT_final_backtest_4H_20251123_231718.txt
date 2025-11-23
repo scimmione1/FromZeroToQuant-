@@ -1,0 +1,60 @@
+FINAL BACKTEST RESULTS - 4H TIMEFRAME
+Ticker: MSFT
+Generated on: 2025-11-23 23:17:18
+================================================================================
+
+SUMMARY:
+Total strategies tested: 4
+Successful backtests: 4
+Failed backtests: 0
+
+================================================================================
+
+SUCCESSFUL STRATEGIES:
+--------------------------------------------------------------------------------
+
+1. VWAP_CDLHAMMER
+-----------------
+  Return [%]: 46.09%
+  # Trades: 31
+  Win Rate [%]: 61.29%
+  Sharpe Ratio: 1.254
+  Max. Drawdown [%]: -11.48%
+
+2. VWAP_CDLHARAMI
+-----------------
+  Return [%]: 11.61%
+  # Trades: 39
+  Win Rate [%]: 48.72%
+  Sharpe Ratio: 0.390
+  Max. Drawdown [%]: -7.57%
+
+3. VWAP_CDLHARAMICROSS
+----------------------
+  Return [%]: 10.27%
+  # Trades: 10
+  Win Rate [%]: 60.00%
+  Sharpe Ratio: 0.593
+  Max. Drawdown [%]: -7.86%
+
+4. VWAP_CDLMATCHINGLOW
+----------------------
+  Return [%]: 6.08%
+  # Trades: 21
+  Win Rate [%]: 47.62%
+  Sharpe Ratio: 0.218
+  Max. Drawdown [%]: -9.21%
+
+
+================================================================================
+BEST PERFORMING STRATEGY:
+Strategy: VWAP_CDLHAMMER
+Return: 46.09%
+Sharpe Ratio: 1.254
+Number of Trades: 31
+================================================================================
+
+================================================================================
+Total strategies: 4
+Timeframe: 4H
+File generated: MSFT_final_backtest_4H_20251123_231718.txt
