@@ -1,0 +1,52 @@
+FINAL BACKTEST RESULTS - 4H TIMEFRAME
+Ticker: META
+Generated on: 2025-11-23 23:09:50
+================================================================================
+
+SUMMARY:
+Total strategies tested: 3
+Successful backtests: 3
+Failed backtests: 0
+
+================================================================================
+
+SUCCESSFUL STRATEGIES:
+--------------------------------------------------------------------------------
+
+1. VWAP_CDLBELTHOLD
+-------------------
+  Return [%]: 181.73%
+  # Trades: 51
+  Win Rate [%]: 54.90%
+  Sharpe Ratio: 1.072
+  Max. Drawdown [%]: -26.97%
+
+2. VWAP_CDLTAKURI
+-----------------
+  Return [%]: 35.85%
+  # Trades: 25
+  Win Rate [%]: 52.00%
+  Sharpe Ratio: 0.731
+  Max. Drawdown [%]: -21.11%
+
+3. VWAP_CDL3INSIDE
+------------------
+  Return [%]: 6.85%
+  # Trades: 13
+  Win Rate [%]: 23.08%
+  Sharpe Ratio: 0.125
+  Max. Drawdown [%]: -20.97%
+
+
+================================================================================
+BEST PERFORMING STRATEGY:
+Strategy: VWAP_CDLBELTHOLD
+Return: 181.73%
+Sharpe Ratio: 1.072
+Number of Trades: 51
+================================================================================
+
+================================================================================
+Total strategies: 3
+Timeframe: 4H
+File generated: META_final_backtest_4H_20251123_230950.txt
