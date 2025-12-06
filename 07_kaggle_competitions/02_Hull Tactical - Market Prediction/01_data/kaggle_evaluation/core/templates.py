@@ -4,7 +4,6 @@ import abc
 import os
 import time
 import warnings
-
 from types import FunctionType
 from typing import Any, Generator, Optional, Tuple, Union
 
@@ -13,7 +12,6 @@ import polars as pl
 
 import kaggle_evaluation.core.base_gateway
 import kaggle_evaluation.core.relay
-
 
 _initial_import_time = time.time()
 _issued_startup_time_warning = False

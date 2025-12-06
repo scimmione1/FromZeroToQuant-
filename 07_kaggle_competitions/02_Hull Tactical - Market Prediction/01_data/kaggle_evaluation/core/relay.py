@@ -9,7 +9,6 @@ import io
 import json
 import socket
 import time
-
 from concurrent import futures
 from types import FunctionType
 from typing import Any, Optional, Tuple
@@ -19,7 +18,6 @@ import numpy as np
 import pandas as pd
 import polars as pl
 import pyarrow
-
 from grpc._channel import _InactiveRpcError
 
 import kaggle_evaluation.core.generated.kaggle_evaluation_pb2 as kaggle_evaluation_proto

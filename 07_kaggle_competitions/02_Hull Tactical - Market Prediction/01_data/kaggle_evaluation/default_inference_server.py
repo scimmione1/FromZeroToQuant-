@@ -1,6 +1,5 @@
-import kaggle_evaluation.core.templates
-
 import default_gateway
+import kaggle_evaluation.core.templates
 
 
 class DefaultInferenceServer(kaggle_evaluation.core.templates.InferenceServer):

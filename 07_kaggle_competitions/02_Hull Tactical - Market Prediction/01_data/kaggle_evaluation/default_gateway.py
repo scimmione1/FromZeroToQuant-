@@ -3,11 +3,9 @@
 import os
 from pathlib import Path
 
-import pandas as pd
-import polars as pl
-
 import kaggle_evaluation.core.base_gateway
 import kaggle_evaluation.core.templates
+import polars as pl
 
 
 class DefaultGateway(kaggle_evaluation.core.templates.Gateway):

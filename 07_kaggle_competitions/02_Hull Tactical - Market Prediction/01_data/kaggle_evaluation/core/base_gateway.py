@@ -10,9 +10,8 @@ import re
 import subprocess
 import sys
 import traceback
-
 from socket import gaierror
-from typing import Any, final, List, Optional, Tuple, Union
+from typing import Any, List, Optional, Tuple, Union, final
 
 import grpc
 import numpy as np
@@ -20,7 +19,6 @@ import pandas as pd
 import polars as pl
 
 import kaggle_evaluation.core.relay
-
 
 _DATAFRAME_LIKE_TYPES = (pl.DataFrame, pl.Series, pd.DataFrame, pd.Series)
 _VALID_ROW_ID_SCALAR_TYPES = (str, int)
