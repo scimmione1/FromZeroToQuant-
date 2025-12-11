@@ -1,8 +1,0 @@
-Results saved on: 2025-11-22 21:54:09
-================================================================================
-
-          strategy_name  in_sample_return  out_of_sample_return  performance_degradation  # Trades  Win Rate [%]
-VWAP_CDLSEPARATINGLINES          3.006701                   0.0                 3.006701         0           NaN
-
-================================================================================
-Total records: 1
