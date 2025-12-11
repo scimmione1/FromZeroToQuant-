@@ -694,6 +694,66 @@ bool CDLTASUKIGAP(int i)
 //+------------------------------------------------------------------+
 //| CDLABANDONEDBABY Pattern Detection Function                      |
 //+------------------------------------------------------------------+
+bool CDLABANDONEDBABY(int i)
+{
+   // Need candles i, i+1, i+2
+   if(i+2 >= Bars)
+      return false;
+
+   // OHLC extraction
+   double o0 = Open[i];     double c0 = Close[i];     double h0 = High[i];     double l0 = Low[i];
+   double o1 = Open[i+1];   double c1 = Close[i+1];   double h1 = High[i+1];   double l1 = Low[i+1];
+   double o2 = Open[i+2];   double c2 = Close[i+2];   double h2 = High[i+2];   double l2 = Low[i+2];
+
+   // Body sizes
+   double body0 = MathAbs(c0 - o0);
+   double body1 = MathAbs(c1 - o1);
+   double body2 = MathAbs(c2 - o2);
+
+   // Body average (EMA 14)
+   double bodyAvg = iMA(NULL,0,14,0,MODE_EMA,PRICE_CLOSE,i);
+
+   bool long2  = body2 > bodyAvg;    // Candle 2 long
+   bool doji1  = ( (h1 - l1) > 0 && body1 <= (h1 - l1) * 0.05 ); // Doji = 5% body threshold
+
+   // Candle colors
+   bool white0 = (c0 > o0);
+   bool black2 = (c2 < o2);
+
+   // Trend rule: Downtrend using SMA50 (same as PineScript)
+   double sma50_2 = iMA(NULL,0,50,0,MODE_SMA,PRICE_CLOSE,i+2);
+   bool downtrend = (c2 < sma50_2);
+
+   // Body High/Low for correct engulf/gap checking
+   double bodyHi2 = MathMax(c2,o2);
+   double bodyLo2 = MathMin(c2,o2);
+
+   double bodyHi1 = MathMax(c1,o1);
+   double bodyLo1 = MathMin(c1,o1);
+
+   double bodyHi0 = MathMax(c0,o0);
+   double bodyLo0 = MathMin(c0,o0);
+
+   // Condition from PineScript:
+   // low[2] > high[1]   => gap between candle 2 and doji
+   bool gapDownDoji = (l2 > h1);
+
+   // high[1] < low      => gap up between doji and candle 0
+   bool gapUpReversal = (h1 < l0);
+
+   // FINAL PATTERN LOGIC
+   if( downtrend && 
+       black2 && long2 &&
+       doji1 &&
+       gapDownDoji &&
+       white0 &&
+       gapUpReversal )
+   {
+      return true;
+   }
+
+   return false;
+}
 
 //+------------------------------------------------------------------+
 //| CDLLADDERBOTTOM Pattern Detection Function                       |
