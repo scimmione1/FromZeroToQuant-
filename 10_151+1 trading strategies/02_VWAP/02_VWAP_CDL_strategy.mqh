@@ -900,10 +900,52 @@ bool CDL3INSIDE(int i)
    return false;
 }
 
+//+------------------------------------------------------------------+
+//| CDL3OUTSIDEUP Pattern Detection (Bullish Reversal)               |
+//| Conversion from TradingView code1                                |
+//+------------------------------------------------------------------+
+bool CDL3OUTSIDEUP(int i)
+{
+   // Ensure enough candles
+   if(i+2 >= Bars) return false;
 
-//+------------------------------------------------------------------+
-//| CDL3OUTSIDE Pattern Detection Function                           |
-//+------------------------------------------------------------------+
+   //----------------------------------------------------------------
+   // Extract candle data
+   //----------------------------------------------------------------
+   double o0 = Open[i];
+   double c0 = Close[i];
+   double h0 = High[i];
+
+   double o1 = Open[i+1];
+   double c1 = Close[i+1];
+   double h1 = High[i+1];
+
+   double o2 = Open[i+2];
+   double c2 = Close[i+2];
+
+   //----------------------------------------------------------------
+   // Pattern logic (Three Outside Up)
+   //----------------------------------------------------------------
+   bool candle2_bearish = (c2 < o2);
+   bool candle1_bullish = (c1 > o1);
+
+   // Engulfing body condition
+   bool engulfing =
+      (c1 >= o2) &&     // close1 >= open2
+      (c2 >= o1) &&     // close2 >= open1
+      ((c1 - o1) > (o2 - c2)); // body1 > body2
+
+   // Third candle must be bullish and confirm breakout above high[1]
+   bool bullish_confirmation =
+      (c0 > o0) &&
+      (c0 > h1);
+
+   if(candle2_bearish && candle1_bullish && engulfing && bullish_confirmation)
+      return true;
+
+   return false;
+}
+
 
 //+------------------------------------------------------------------+
 //| CDBELTHOLD Pattern Detection Function                            |
