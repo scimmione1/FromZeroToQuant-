@@ -276,8 +276,56 @@ bool CDLENGULFING(int index, const MqlRates &rates[])
 }
 
 //+------------------------------------------------------------------+
-//| CDLPIERCING Pattern Detection Function                           |
+//| Piercing Pattern (Bullish) Detection Function                    |
 //+------------------------------------------------------------------+
+bool CDLPiercingBullish(int i)
+{
+   // Ensure we have the previous candle
+   if (i+1 >= Bars) 
+      return false;
+
+   // Candle 1 (previous)
+   double prevOpen   = Open[i+1];
+   double prevClose  = Close[i+1];
+   double prevHigh   = High[i+1];
+   double prevLow    = Low[i+1];
+
+   // Candle 2 (current)
+   double currOpen   = Open[i];
+   double currClose  = Close[i];
+   double currHigh   = High[i];
+   double currLow    = Low[i];
+
+   // Body calculations
+   double prevBodyHi = MathMax(prevOpen, prevClose);
+   double prevBodyLo = MathMin(prevOpen, prevClose);
+   double prevBody   = prevBodyHi - prevBodyLo;
+   double prevMid    = prevBodyLo + prevBody / 2.0;
+
+   double currBodyHi = MathMax(currOpen, currClose);
+   double currBodyLo = MathMin(currOpen, currClose);
+   double currBody   = currBodyHi - currBodyLo;
+
+   // Trend condition from Pine: previous was in downtrend
+   // Simplified → previous candle bearish + long body
+   bool prevBearish = (prevClose < prevOpen);
+   bool prevLongBody = (prevBody > iMA(NULL, 0, 14, 0, MODE_EMA, PRICE_BODY, i));
+
+   // Current must be bullish
+   bool currBullish = (currClose > currOpen);
+
+   // Piercing key conditions:
+   bool cond1 = prevBearish;          // previous bearish
+   bool cond2 = currBullish;          // current bullish
+   bool cond3 = currOpen <= prevLow;  // current opens below previous low (gap down)
+   bool cond4 = currClose > prevMid;  // closes above previous midpoint
+   bool cond5 = currClose < prevOpen; // closes below previous open (not fully engulfing)
+
+   if(cond1 && cond2 && cond3 && cond4 && cond5)
+      return true;
+
+   return false;
+}
 
 //+------------------------------------------------------------------+
 //| CDLHARAMI Pattern Detection Function                             |
@@ -332,8 +380,75 @@ bool CDLHARAMI(int shift = 0)
 }
 
 //+------------------------------------------------------------------+
-//| CDLHARAMICROSS Pattern Detection Function                        |
+//| Harami Cross - Bullish Pattern Detection                         |
 //+------------------------------------------------------------------+
+bool CDLHaramicrossBullish(int i)
+{
+   // Ensure we have previous candle
+   if (i+1 >= Bars)
+      return false;
+
+   // Previous candle OHLC
+   double prevOpen   = Open[i+1];
+   double prevClose  = Close[i+1];
+   double prevHigh   = High[i+1];
+   double prevLow    = Low[i+1];
+
+   // Current candle OHLC
+   double currOpen   = Open[i];
+   double currClose  = Close[i];
+   double currHigh   = High[i];
+   double currLow    = Low[i];
+
+   // Previous body
+   double prevBodyHi = MathMax(prevOpen, prevClose);
+   double prevBodyLo = MathMin(prevOpen, prevClose);
+   double prevBody   = prevBodyHi - prevBodyLo;
+
+   // Current body
+   double currBodyHi = MathMax(currOpen, currClose);
+   double currBodyLo = MathMin(currOpen, currClose);
+   double currBody   = currBodyHi - currBodyLo;
+
+   // Candle range
+   double currRange  = currHigh - currLow;
+
+   // Doji condition (similar to Pine: body <= 5% of range)
+   bool isDoji = false;
+   if(currRange > 0.0)
+      isDoji = (currBody <= currRange * 0.05);
+
+   // Trend filter simplified (downtrend last candle):
+   bool prevDownTrend = (prevClose < prevOpen);
+
+   // Previous candle should have long body (compared to EMA of body)
+   double prevBodyAvg = iMA(NULL, 0, 14, 0, MODE_EMA, PRICE_CLOSE, i);  
+   bool prevLongBody = (prevBody > prevBodyAvg);
+
+   // Harami Cross Bullish conditions:
+   bool cond_prev_bearish   = (prevClose < prevOpen);
+   bool cond_prev_long      =  prevLongBody;
+   bool cond_prev_downtrend =  prevDownTrend;
+
+   bool cond_curr_doji      = isDoji;
+
+   // Current candle fully inside previous body (Harami logic)
+   bool cond_inside_body =
+      (currHigh <= prevBodyHi) &&
+      (currLow  >= prevBodyLo);
+
+   if(cond_prev_bearish &&
+      cond_prev_long &&
+      cond_prev_downtrend &&
+      cond_curr_doji &&
+      cond_inside_body)
+   {
+      return true;
+   }
+
+   return false;
+}
+
 
 //+------------------------------------------------------------------+
 //| CDLTAKURI Pattern Detection Function                             |
