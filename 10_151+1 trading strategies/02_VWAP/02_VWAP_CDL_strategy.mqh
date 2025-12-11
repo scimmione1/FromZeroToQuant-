@@ -276,9 +276,9 @@ bool CDLENGULFING(int index, const MqlRates &rates[])
 }
 
 //+------------------------------------------------------------------+
-//| Piercing Pattern (Bullish) Detection Function                    |
+//| CDLPIERCING Pattern Detection Function                           |
 //+------------------------------------------------------------------+
-bool CDLPiercingBullish(int i)
+bool CDLPIERCING(int i)
 {
    // Ensure we have the previous candle
    if (i+1 >= Bars) 
@@ -380,7 +380,7 @@ bool CDLHARAMI(int shift = 0)
 }
 
 //+------------------------------------------------------------------+
-//| Harami Cross - Bullish Pattern Detection                         |
+//| CDLHARAMICROSS - Bullish Pattern Detection                         |
 //+------------------------------------------------------------------+
 bool CDLHaramicrossBullish(int i)
 {
@@ -454,6 +454,9 @@ bool CDLHaramicrossBullish(int i)
 //| CDLTAKURI Pattern Detection Function                             |
 //+------------------------------------------------------------------+
 
+//+------------------------------------------------------------------+
+//| CDL3WHITESOLDIERS Pattern Detection Function                             |
+//+------------------------------------------------------------------+
 //+------------------------------------------------------------------+
 //| Three White Soldiers - Bullish Pattern Detection                 |
 //+------------------------------------------------------------------+
@@ -552,6 +555,72 @@ bool CdlThreeWhiteSoldiersBullish(int i)
 //+------------------------------------------------------------------+
 //| CDLRISEFALL3METHODS Pattern Detection Function                   |
 //+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
+//| Rising Three Methods - Bullish Pattern Detection                 |
+//+------------------------------------------------------------------+
+bool CDLRISEFALL3METHODS(int i)
+{
+   // We need candles i..i+4
+   if(i+4 >= Bars)
+      return false;
+
+   // Extract OHLC
+   double o0 = Open[i];     double c0 = Close[i];     double h0 = High[i];     double l0 = Low[i];
+   double o1 = Open[i+1];   double c1 = Close[i+1];   double h1 = High[i+1];   double l1 = Low[i+1];
+   double o2 = Open[i+2];   double c2 = Close[i+2];   double h2 = High[i+2];   double l2 = Low[i+2];
+   double o3 = Open[i+3];   double c3 = Close[i+3];   double h3 = High[i+3];   double l3 = Low[i+3];
+   double o4 = Open[i+4];   double c4 = Close[i+4];   double h4 = High[i+4];   double l4 = Low[i+4];
+
+   // Body sizes
+   double body0 = MathAbs(c0 - o0);
+   double body1 = MathAbs(c1 - o1);
+   double body2 = MathAbs(c2 - o2);
+   double body3 = MathAbs(c3 - o3);
+   double body4 = MathAbs(c4 - o4);
+
+   // Body average via EMA 14 (TA equivalent)
+   double bodyAvg = iMA(NULL,0,14,0,MODE_EMA,PRICE_CLOSE,i);
+
+   bool long0 = body0 > bodyAvg;
+   bool long4 = body4 > bodyAvg;
+
+   bool small1 = body1 < bodyAvg;
+   bool small2 = body2 < bodyAvg;
+   bool small3 = body3 < bodyAvg;
+
+   // Candle colors
+   bool white0 = (c0 > o0);
+   bool white4 = (c4 > o4);
+
+   bool black1 = (c1 < o1);
+   bool black2 = (c2 < o2);
+   bool black3 = (c3 < o3);
+
+   // Trend check equivalent to C_UpTrend[4]
+   bool upTrend4 = (c4 > iMA(NULL,0,50,0,MODE_SMA,PRICE_CLOSE,i+4));
+
+   // Middle three candles inside candle 4 range
+   bool inside1 = (o1 < h4 && c1 > l4);
+   bool inside2 = (o2 < h4 && c2 > l4);
+   bool inside3 = (o3 < h4 && c3 > l4);
+
+   // Final bullish candle closes above candle 4 close
+   bool strongBullishFinish = (white0 && long0 && c0 > c4);
+
+   // Pattern logic
+   if( upTrend4 &&
+       long4 && white4 &&
+       small3 && black3 && inside3 &&
+       small2 && black2 && inside2 &&
+       small1 && black1 && inside1 &&
+       strongBullishFinish )
+   {
+      return true;
+   }
+
+   return false;
+}
+
 
 //+------------------------------------------------------------------+
 //| CDLMATHOLD Pattern Detection Function                            |
