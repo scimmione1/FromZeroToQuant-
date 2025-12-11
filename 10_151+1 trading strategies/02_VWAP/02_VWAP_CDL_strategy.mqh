@@ -457,10 +457,7 @@ bool CDLHaramicrossBullish(int i)
 //+------------------------------------------------------------------+
 //| CDL3WHITESOLDIERS Pattern Detection Function                             |
 //+------------------------------------------------------------------+
-//+------------------------------------------------------------------+
-//| Three White Soldiers - Bullish Pattern Detection                 |
-//+------------------------------------------------------------------+
-bool CdlThreeWhiteSoldiersBullish(int i)
+bool CDL3WHITESOLDIERS(int i)
 {
    // We need i, i+1, i+2
    if(i+2 >= Bars)
@@ -555,9 +552,6 @@ bool CdlThreeWhiteSoldiersBullish(int i)
 //+------------------------------------------------------------------+
 //| CDLRISEFALL3METHODS Pattern Detection Function                   |
 //+------------------------------------------------------------------+
-//+------------------------------------------------------------------+
-//| Rising Three Methods - Bullish Pattern Detection                 |
-//+------------------------------------------------------------------+
 bool CDLRISEFALL3METHODS(int i)
 {
    // We need candles i..i+4
@@ -633,6 +627,69 @@ bool CDLRISEFALL3METHODS(int i)
 //+------------------------------------------------------------------+
 //| CDLTASUKIGAP Pattern Detection Function                          |
 //+------------------------------------------------------------------+
+bool CDLTASUKIGAP(int i)
+{  
+   // Need candles i, i+1, i+2
+   if(i+2 >= Bars)
+      return false;
+
+   // Extract OHLC
+   double o0 = Open[i];     double c0 = Close[i];     double h0 = High[i];     double l0 = Low[i];
+   double o1 = Open[i+1];   double c1 = Close[i+1];   double h1 = High[i+1];   double l1 = Low[i+1];
+   double o2 = Open[i+2];   double c2 = Close[i+2];   double h2 = High[i+2];   double l2 = Low[i+2];
+
+   // Bodies
+   double body0 = MathAbs(c0 - o0);
+   double body1 = MathAbs(c1 - o1);
+   double body2 = MathAbs(c2 - o2);
+
+   // Body average (EMA 14)
+   double bodyAvg = iMA(NULL,0,14,0,MODE_EMA,PRICE_CLOSE,i);
+
+   bool long2  = body2 > bodyAvg;
+   bool small1 = body1 < bodyAvg;
+
+   // Candle colors
+   bool white2 = (c2 > o2);
+   bool white1 = (c1 > o1);
+   bool black0 = (c0 < o0);
+
+   // Trend check (equivalent to C_UpTrend in PineScript)
+   bool upTrend = (c2 > iMA(NULL,0,50,0,MODE_SMA,PRICE_CLOSE,i+2));
+
+   // Gap between candle 2 and candle 1:
+   // C_BodyLo[1] > C_BodyHi[2]
+   double bodyHi2 = MathMax(c2,o2);
+   double bodyLo2 = MathMin(c2,o2);
+
+   double bodyHi1 = MathMax(c1,o1);
+   double bodyLo1 = MathMin(c1,o1);
+
+   double bodyHi0 = MathMax(c0,o0);
+   double bodyLo0 = MathMin(c0,o0);
+
+   bool gapUp = (bodyLo1 > bodyHi2);   // proper upside gap
+
+   // Candle 0 closes inside the gap but does NOT close it fully
+   bool closesInsideGap =
+      (bodyLo0 >= bodyHi2) &&   // stays above candle 2 high
+      (bodyLo0 <= bodyLo1);     // but within candle 1 low
+
+   // Final combined logic from PineScript
+   if( long2 &&
+       small1 &&
+       upTrend &&
+       white2 &&
+       gapUp &&
+       white1 &&
+       black0 &&
+       closesInsideGap )
+   {
+      return true;
+   }
+
+   return false;
+}
 
 //+------------------------------------------------------------------+
 //| CDLABANDONEDBABY Pattern Detection Function                      |
