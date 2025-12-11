@@ -455,8 +455,99 @@ bool CDLHaramicrossBullish(int i)
 //+------------------------------------------------------------------+
 
 //+------------------------------------------------------------------+
-//| CDL3WHITESOLDIERS Pattern Detection Function                     |
+//| Three White Soldiers - Bullish Pattern Detection                 |
 //+------------------------------------------------------------------+
+bool CdlThreeWhiteSoldiersBullish(int i)
+{
+   // We need i, i+1, i+2
+   if(i+2 >= Bars)
+      return false;
+
+   // Candle 0 (current)
+   double o0 = Open[i];
+   double c0 = Close[i];
+   double h0 = High[i];
+   double l0 = Low[i];
+
+   // Candle 1
+   double o1 = Open[i+1];
+   double c1 = Close[i+1];
+   double h1 = High[i+1];
+   double l1 = Low[i+1];
+
+   // Candle 2
+   double o2 = Open[i+2];
+   double c2 = Close[i+2];
+   double h2 = High[i+2];
+   double l2 = Low[i+2];
+
+   // Body sizes
+   double body0 = MathAbs(c0 - o0);
+   double body1 = MathAbs(c1 - o1);
+   double body2 = MathAbs(c2 - o2);
+
+   // Body average (EMA of 14 periods, PineScript equivalent)
+   double bodyAvg = iMA(NULL, 0, 14, 0, MODE_EMA, PRICE_CLOSE, i);
+
+   bool long0 = body0 > bodyAvg;
+   bool long1 = body1 > bodyAvg;
+   bool long2 = body2 > bodyAvg;
+
+   // White bodies (bullish candles)
+   bool white0 = (c0 > o0);
+   bool white1 = (c1 > o1);
+   bool white2 = (c2 > o2);
+
+   // Up shadows
+   double upShadow0 = h0 - MathMax(o0, c0);
+   double upShadow1 = h1 - MathMax(o1, c1);
+   double upShadow2 = h2 - MathMax(o2, c2);
+
+   // Candle ranges
+   double range0 = h0 - l0;
+   double range1 = h1 - l1;
+   double range2 = h2 - l2;
+
+   // Shadow condition: small upper shadow
+   double shadowLimit0 = range0 * 0.05;
+   double shadowLimit1 = range1 * 0.05;
+   double shadowLimit2 = range2 * 0.05;
+
+   bool smallUpShadow0 = (upShadow0 < shadowLimit0);
+   bool smallUpShadow1 = (upShadow1 < shadowLimit1);
+   bool smallUpShadow2 = (upShadow2 < shadowLimit2);
+
+   // Three White Soldiers logic
+   bool cond_long_bodies =
+         long0 && long1 && long2;
+
+   bool cond_white_bodies =
+         white0 && white1 && white2;
+
+   bool cond_close_increasing =
+         (c0 > c1) && (c1 > c2);
+
+   // Opens inside previous body
+   bool cond_open_positions =
+         (o0 < c1 && o0 > o1) &&
+         (o1 < c2 && o1 > o2);
+
+   // Small upper shadows
+   bool cond_small_up_shadows =
+         smallUpShadow0 && smallUpShadow1 && smallUpShadow2;
+
+   // Final pattern decision
+   if(cond_long_bodies &&
+      cond_white_bodies &&
+      cond_close_increasing &&
+      cond_open_positions &&
+      cond_small_up_shadows)
+   {
+      return true;
+   }
+
+   return false;
+}
 
 //+------------------------------------------------------------------+
 //| CDLRISEFALL3METHODS Pattern Detection Function                   |
