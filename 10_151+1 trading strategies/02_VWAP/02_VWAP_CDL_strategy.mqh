@@ -802,8 +802,104 @@ bool CDLMATCHINGLOW(int i, double tolerancePoints = 0.0)
 //+------------------------------------------------------------------+
 
 //+------------------------------------------------------------------+
-//| CDL3INSIDE Pattern Detection Function                            |
+//| CDL3INSIDE Pattern Detection Function (Bullish & Bearish)        |
+//| Converted from TradingFinder - Three Inside Bar Pattern          |
 //+------------------------------------------------------------------+
+bool CDL3INSIDE(int i)
+{
+   // Must have candles i, i+1, i+2
+   if(i+2 >= Bars) return false;
+
+   //----------------------------------------------------------------
+   // Candle features
+   //----------------------------------------------------------------
+   double high0 = High[i];
+   double low0  = Low[i];
+   double open0 = Open[i];
+   double close0= Close[i];
+
+   double high1 = High[i+1];
+   double low1  = Low[i+1];
+   double open1 = Open[i+1];
+   double close1= Close[i+1];
+
+   double high2 = High[i+2];
+   double low2  = Low[i+2];
+   double open2 = Open[i+2];
+   double close2= Close[i+2];
+
+   double range0 = high0 - low0;
+   double body0  = close0 - open0;
+
+   bool posCandle0 = (body0 > 0);   // bullish
+   bool negCandle0 = (body0 < 0);   // bearish
+
+   double range2 = high2 - low2;
+   double body2  = close2 - open2;
+
+   bool posCandle2 = (body2 > 0);
+   bool negCandle2 = (body2 < 0);
+
+   // Body size proportion (in Pine they used abs(body/range))
+   double fullBody = 0;
+   if(range0 > 0)
+      fullBody = MathAbs(body0 / range0);
+
+   //----------------------------------------------------------------
+   // Conditions replicated from PineScript logic
+   //----------------------------------------------------------------
+
+   // === Three Inside Up – Weak ===
+   bool inside_bull_W =
+      negCandle2 &&
+      posCandle0 &&
+      fullBody >= 0.6 &&
+      fullBody <= 0.8 &&
+      close0 > high1 &&
+      close0 > (low2 + high2) / 2.0 &&
+      high1 < high2 &&
+      low2 > low1;
+
+   // === Three Inside Up – Strong ===
+   bool inside_bull_S =
+      negCandle2 &&
+      posCandle0 &&
+      fullBody > 0.8 &&
+      close0 > high1 &&
+      close0 > (low2 + high2) / 2.0 &&
+      high1 < high2 &&
+      low2 > low1;
+
+   // === Three Inside Down – Weak ===
+   bool inside_bear_W =
+      negCandle0 &&
+      posCandle2 &&
+      fullBody >= 0.6 &&
+      fullBody <= 0.8 &&
+      close0 < low1 &&
+      close0 < (low2 + high2) / 2.0 &&
+      high1 > high2 &&
+      low2 < low1;
+
+   // === Three Inside Down – Strong ===
+   bool inside_bear_S =
+      negCandle0 &&
+      posCandle2 &&
+      fullBody > 0.8 &&
+      close0 < low1 &&
+      close0 < (low2 + high2) / 2.0 &&
+      high1 > high2 &&
+      low2 < low1;
+
+   //----------------------------------------------------------------
+   // Final condition (return TRUE if any of the patterns is triggered)
+   //----------------------------------------------------------------
+   if(inside_bull_W || inside_bull_S || inside_bear_W || inside_bear_S)
+      return true;
+
+   return false;
+}
+
 
 //+------------------------------------------------------------------+
 //| CDL3OUTSIDE Pattern Detection Function                           |
