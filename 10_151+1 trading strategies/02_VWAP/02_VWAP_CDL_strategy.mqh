@@ -720,6 +720,7 @@ bool CDLABANDONEDBABY(int i)
    bool white0 = (c0 > o0);
    bool black2 = (c2 < o2);
 
+   // Check Again
    // Trend rule: Downtrend using SMA50 (same as PineScript)
    double sma50_2 = iMA(NULL,0,50,0,MODE_SMA,PRICE_CLOSE,i+2);
    bool downtrend = (c2 < sma50_2);
@@ -762,6 +763,39 @@ bool CDLABANDONEDBABY(int i)
 //+------------------------------------------------------------------+
 //| CDLMATCHINGLOW Pattern Detection Function                        |
 //+------------------------------------------------------------------+
+bool CDLMATCHINGLOW(int i, double tolerancePoints = 0.0)
+{
+   // Need at least two candles: i and i+1
+   if(i+1 >= Bars) return false;
+
+   double o0 = Open[i];
+   double c0 = Close[i];
+   double o1 = Open[i+1];
+   double c1 = Close[i+1];
+
+   // 1. Both candles must be bearish
+   bool black0 = (c0 < o0);
+   bool black1 = (c1 < o1);
+
+   if(!black0 || !black1)
+      return false;
+
+   // 2. Matching closes (TA-Lib allows small tolerance)
+   double diff = MathAbs(c0 - c1);
+
+   if(tolerancePoints <= 0)
+      tolerancePoints = Point;  // default 1 pip or 1 tick
+
+   if(diff > tolerancePoints)
+      return false;
+
+   // 3. Downtrend filter (SMA50)
+   double sma50 = iMA(NULL, 0, 50, 0, MODE_SMA, PRICE_CLOSE, i+1);
+   if(Close[i+1] > sma50)
+      return false;
+
+   return true;
+}
 
 //+------------------------------------------------------------------+
 //| CDLUNIQUE3RIVER Pattern Detection Function                       |
