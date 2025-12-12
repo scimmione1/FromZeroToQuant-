@@ -1351,6 +1351,71 @@ int CDLKICKINGBYLENGTH(int shift = 0)
 //+------------------------------------------------------------------+
 //| CDLSTICKSANDWICH Pattern Detection Function                      |
 //+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
+//| Stick Sandwich Pattern Detection                                 |
+//| Return: +1 = bullish, 0 = none                                   |
+//+------------------------------------------------------------------+
+int CDLSTICKSANDWICH(int shift = 0)
+{
+   // Pattern composto da 3 candele:
+   // window[2] = shift+2  (prima)
+   // window[1] = shift+1  (seconda)
+   // input    = shift    (terza)
+   if (shift + 2 >= Bars) return 0;
+
+   //-------------------------------------------------------------
+   // Parametri equivalenti a CandleSettings(Equal) di QC
+   //-------------------------------------------------------------
+   int EqualPeriod = 10;
+
+   double equalTotal = 0.0;
+
+   // Calcolo della media dei range "equal"
+   for (int i = 0; i < EqualPeriod; i++)
+   {
+      int idx = shift + 2 + i;
+      if (idx >= Bars) break;
+      equalTotal += MathAbs(Close[idx] - Open[idx]);
+   }
+   double equalAvg = equalTotal / EqualPeriod;
+
+   //-------------------------------------------------------------
+   // Indici più leggibili
+   //-------------------------------------------------------------
+   int c2 = shift + 2;   // First candle
+   int c1 = shift + 1;   // Second candle
+   int c0 = shift;       // Third candle (current)
+
+   //-------------------------------------------------------------
+   // Helper functions
+   //-------------------------------------------------------------
+   bool white(int i) { return Close[i] > Open[i]; }
+   bool black(int i) { return Open[i] > Close[i]; }
+
+   //-------------------------------------------------------------
+   // Condizioni del pattern Stick Sandwich
+   //-------------------------------------------------------------
+   bool firstBlack  = black(c2);
+   bool secondWhite = white(c1);
+   bool thirdBlack  = black(c0);
+
+   bool secondLowAboveFirstClose = Low[c1] > Close[c2];
+
+   bool closesEqual =
+         (Close[c0] <= Close[c2] + equalAvg) &&
+         (Close[c0] >= Close[c2] - equalAvg);
+
+   //-------------------------------------------------------------
+   // Condizione finale
+   //-------------------------------------------------------------
+   if (firstBlack && secondWhite && thirdBlack &&
+       secondLowAboveFirstClose && closesEqual)
+   {
+      return 1;  // Always bullish
+   }
+
+   return 0;
+}
 
 
 //+------------------------------------------------------------------+
