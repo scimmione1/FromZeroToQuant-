@@ -300,23 +300,23 @@ bool CDLENGULFING(int shift = 0)
 //+------------------------------------------------------------------+
 //| CDLPIERCING Pattern Detection Function                           |
 //+------------------------------------------------------------------+
-bool CDLPIERCING(int i)
+bool CDLPIERCING(int shift = 0)
 {
    // Ensure we have the previous candle
-   if (i+1 >= Bars) 
+   if(Bars < shift + 2)
       return false;
 
    // Candle 1 (previous)
-   double prevOpen   = Open[i+1];
-   double prevClose  = Close[i+1];
-   double prevHigh   = High[i+1];
-   double prevLow    = Low[i+1];
+   double prevOpen   = Open[shift + 1];
+   double prevClose  = Close[shift + 1];
+   double prevHigh   = High[shift + 1];
+   double prevLow    = Low[shift + 1];
 
    // Candle 2 (current)
-   double currOpen   = Open[i];
-   double currClose  = Close[i];
-   double currHigh   = High[i];
-   double currLow    = Low[i];
+   double currOpen   = Open[shift];
+   double currClose  = Close[shift];
+   double currHigh   = High[shift];
+   double currLow    = Low[shift];
 
    // Body calculations
    double prevBodyHi = MathMax(prevOpen, prevClose);
@@ -331,7 +331,7 @@ bool CDLPIERCING(int i)
    // Trend condition from Pine: previous was in downtrend
    // Simplified → previous candle bearish + long body
    bool prevBearish = (prevClose < prevOpen);
-   bool prevLongBody = (prevBody > iMA(NULL, 0, 14, 0, MODE_EMA, PRICE_BODY, i));
+   bool prevLongBody = (prevBody > iMA(NULL, 0, 14, 0, MODE_EMA, PRICE_BODY, shift));
 
    // Current must be bullish
    bool currBullish = (currClose > currOpen);
