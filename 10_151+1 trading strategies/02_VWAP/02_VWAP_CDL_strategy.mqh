@@ -694,6 +694,123 @@ bool CDLRISEFALL3METHODS(int shift = 0)
 //+------------------------------------------------------------------+
 //| CDLMATHOLD Pattern Detection Function                            |
 //+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
+//| Mat Hold Pattern Detection (Bullish)                             |
+//| Return: 1 = bullish Mat Hold, 0 = no pattern                     |
+//+------------------------------------------------------------------+
+int CDLMATHOLD(int shift = 0, double penetration = 0.5)
+{
+   // Necessarie 5 candele: shift, shift+1, shift+2, shift+3, shift+4
+   if(Bars < shift + 5) return 0;
+
+   //------------------------------------------------------
+   // Parametri equivalenti ai CandleSettings QC
+   //------------------------------------------------------
+   int BodyShortPeriod = 10;
+   int BodyLongPeriod  = 10;
+
+   double bodyShortTotal[5];
+   ArrayInitialize(bodyShortTotal, 0);
+
+   //------------------------------------------------------
+   // Calcolo medie BodyShort per candele 3-2-1
+   //------------------------------------------------------
+   for(int j=3; j>=1; j--)
+   {
+      double sum = 0;
+      for(int k=0; k<BodyShortPeriod; k++)
+      {
+         int idx = shift + j + k;
+         if(idx >= Bars) break;
+         sum += MathAbs(Close[idx] - Open[idx]);
+      }
+      bodyShortTotal[j] = sum / BodyShortPeriod;
+   }
+
+   //------------------------------------------------------
+   // Calcolo media BodyLong per la candela 4
+   //------------------------------------------------------
+   double sumLong = 0;
+   for(int m=0; m<BodyLongPeriod; m++)
+   {
+      int idx = shift + 4 + m;
+      if(idx >= Bars) break;
+      sumLong += MathAbs(Close[idx] - Open[idx]);
+   }
+   double bodyLongAvg = sumLong / BodyLongPeriod;
+
+   //------------------------------------------------------
+   // Indici candele
+   //------------------------------------------------------
+   int c4 = shift + 4;   // first (long white)
+   int c3 = shift + 3;   // small black
+   int c2 = shift + 2;   // small
+   int c1 = shift + 1;   // small
+   int c0 = shift;       // last white
+
+   //------------------------------------------------------
+   // Helper values (inline functions not allowed in MQL4)
+   //------------------------------------------------------
+   bool isWhite_c4 = Close[c4] > Open[c4];
+   bool isWhite_c0 = Close[c0] > Open[c0];
+   bool isBlack_c3 = Open[c3] > Close[c3];
+   
+   double realBody_c4 = MathAbs(Close[c4] - Open[c4]);
+   double realBody_c3 = MathAbs(Close[c3] - Open[c3]);
+   double realBody_c2 = MathAbs(Close[c2] - Open[c2]);
+   double realBody_c1 = MathAbs(Close[c1] - Open[c1]);
+   
+   double bodyLow_c3 = MathMin(Open[c3], Close[c3]);
+   double bodyLow_c2 = MathMin(Open[c2], Close[c2]);
+   double bodyLow_c1 = MathMin(Open[c1], Close[c1]);
+   
+   double bodyHigh_c4 = MathMax(Open[c4], Close[c4]);
+   double bodyHigh_c2 = MathMax(Open[c2], Close[c2]);
+   double bodyHigh_c1 = MathMax(Open[c1], Close[c1]);
+
+   //------------------------------------------------------
+   // Condizioni del pattern
+   //------------------------------------------------------
+   bool cond =
+      // 1) 1st candle: long white
+      realBody_c4 > bodyLongAvg &&
+      isWhite_c4 &&
+
+      // 2) 2nd: small black
+      realBody_c3 < bodyShortTotal[3] &&
+      isBlack_c3 &&
+
+      // 3) 3rd + 4th small bodies
+      realBody_c2 < bodyShortTotal[2] &&
+      realBody_c1 < bodyShortTotal[1] &&
+
+      // 4) Last (5th) candle: white
+      isWhite_c0 &&
+
+      // 5) Upside gap tra 1st e 2nd body
+      bodyLow_c3 > bodyHigh_c4 &&
+
+      // 6) 3rd e 4th "hold within" 1st candle body
+      bodyLow_c2 < Close[c4] &&
+      bodyLow_c1 < Close[c4] &&
+
+      // 7) Reaction days penetration < penetration%
+      bodyLow_c2 > Close[c4] - realBody_c4 * penetration &&
+      bodyLow_c1 > Close[c4] - realBody_c4 * penetration &&
+
+      // 8) 2nd to 4th falling
+      bodyHigh_c2 < Open[c3] &&
+      bodyHigh_c1 < bodyHigh_c2 &&
+
+      // 9) 5th opens above prior close
+      Open[c0] > Close[c1] &&
+
+      // 10) 5th closes above highest high of reaction days
+      Close[c0] > MathMax(MathMax(High[c3], High[c2]), High[c1]);
+
+   if(cond) return 1;
+   return 0;
+}
 
 //+------------------------------------------------------------------+
 //| CDLSEPARATINGLINES Pattern Detection Function                    |
