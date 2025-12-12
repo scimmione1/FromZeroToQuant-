@@ -271,7 +271,6 @@ bool CDLMORNINGDOJISTAR(int shift = 0)
    return (bodySize / totalRange < 0.1);
 }
 
-
 //+------------------------------------------------------------------+
 //| CDLENGULFING Pattern Detection Function                          |
 //+------------------------------------------------------------------+
@@ -471,10 +470,65 @@ bool CDLHaramicrossBullish(int i)
    return false;
 }
 
-
 //+------------------------------------------------------------------+
 //| CDLTAKURI Pattern Detection Function                             |
+//| Takuri (Dragonfly Doji with very long lower shadow)              |
+//| Converted from QuantConnect Takuri indicator                     |
+//| Must have:                                                       |
+//| - doji body (very small body)                                    |
+//| - open and close at the high = no or very short upper shadow     |
+//| - very long lower shadow                                         |
+//| Returns true if pattern detected (always bullish signal)         |
 //+------------------------------------------------------------------+
+bool CDLTAKURI(int shift = 0)
+{
+   // Need enough bars for averaging
+   if(Bars < shift + 11)
+      return false;
+   
+   double O = Open[shift];
+   double C = Close[shift];
+   double H = High[shift];
+   double L = Low[shift];
+   
+   double bodySize = MathAbs(O - C);
+   double totalRange = H - L;
+   double upperShadow = H - MathMax(O, C);
+   double lowerShadow = MathMin(O, C) - L;
+   
+   // Avoid division by zero
+   if(totalRange == 0)
+      return false;
+   
+   // Calculate average body size over last 10 bars for doji comparison
+   double avgBodySize = 0.0;
+   double avgRange = 0.0;
+   for(int i = shift + 1; i <= shift + 10; i++)
+   {
+      avgBodySize += MathAbs(Open[i] - Close[i]);
+      avgRange += High[i] - Low[i];
+   }
+   avgBodySize /= 10.0;
+   avgRange /= 10.0;
+   
+   // Doji body threshold (body <= 10% of average range or very small compared to avg body)
+   double dojiThreshold = MathMax(avgRange * 0.1, avgBodySize * 0.1);
+   bool isDojiBody = (bodySize <= dojiThreshold);
+   
+   // Very short upper shadow (upper shadow < 5% of total range or < 10% of avg range)
+   double veryShortShadowThreshold = MathMax(totalRange * 0.05, avgRange * 0.1);
+   bool hasVeryShortUpperShadow = (upperShadow < veryShortShadowThreshold);
+   
+   // Very long lower shadow (lower shadow > 60% of total range or > average range)
+   double veryLongShadowThreshold = MathMin(totalRange * 0.6, avgRange);
+   bool hasVeryLongLowerShadow = (lowerShadow > veryLongShadowThreshold);
+   
+   // Pattern is valid when all conditions are met
+   if(isDojiBody && hasVeryShortUpperShadow && hasVeryLongLowerShadow)
+      return true;
+   
+   return false;
+}
 
 //+------------------------------------------------------------------+
 //| CDL3WHITESOLDIERS Pattern Detection Function                             |
