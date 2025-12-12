@@ -252,31 +252,39 @@ bool isDoji(int index, const MqlRates &rates[])
    return false;
 }
 */
-bool CDLMORNINGDOJISTAR(MqlRates &rates[])
-  {
-   if(ArraySize(rates) < 1)
+bool CDLMORNINGDOJISTAR(int shift = 0)
+{
+   if(Bars < shift + 1)
       return false;
-   double bodySize = MathAbs(rates[0].open - rates[0].close);
-   double totalRange = rates[0].high - rates[0].low;
+   
+   double O = Open[shift];
+   double C = Close[shift];
+   double H = High[shift];
+   double L = Low[shift];
+   
+   double bodySize = MathAbs(O - C);
+   double totalRange = H - L;
+   
    if(totalRange == 0)
       return false;
+   
    return (bodySize / totalRange < 0.1);
-  }
+}
 
 
 //+------------------------------------------------------------------+
 //| CDLENGULFING Pattern Detection Function                          |
 //+------------------------------------------------------------------+
-bool CDLENGULFING(int index, const MqlRates &rates[])
+bool CDLENGULFING(int shift = 0)
 {
-   // Make sure we have at least 2 bars from 'index'
-   if(index+1 >= ArraySize(rates))
+   // Make sure we have at least 2 bars from 'shift'
+   if(Bars < shift + 2)
       return false;
 
-   double prevOpen  = rates[index+1].open;
-   double prevClose = rates[index+1].close;
-   double currOpen  = rates[index].open;
-   double currClose = rates[index].close;
+   double prevOpen  = Open[shift + 1];
+   double prevClose = Close[shift + 1];
+   double currOpen  = Open[shift];
+   double currClose = Close[shift];
 
    // Check if current candle bullish and fully engulfs previous body
    if(currClose > currOpen &&       // Current bullish
