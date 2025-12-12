@@ -1032,6 +1032,94 @@ int CDBELTHOLD(int shift = 0)
 //+------------------------------------------------------------------+
 //| CDLBREAKAWAY Pattern Detection Function                          |
 //+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
+//| Breakaway Candlestick Pattern Detection                         |
+//| Returns: +1 = Bullish Breakaway, -1 = Bearish Breakaway, 0 = no |
+//+------------------------------------------------------------------+
+int CDLBREAKAWAY(int shift = 0)
+{
+   // Need at least 5 candles
+   if (shift + 4 >= Bars) return 0;
+
+   // Adjustable parameter
+   int BodyLongPeriod = 10;
+
+   // Compute average long body based on candle #4 back
+   double bodySum = 0.0;
+   for (int i = shift + 4; i < shift + 4 + BodyLongPeriod; i++)
+   {
+      if (i >= Bars) break;
+      bodySum += MathAbs(Close[i] - Open[i]);
+   }
+   double avgLongBody = bodySum / BodyLongPeriod;
+
+   // Candles:
+   // c4 = 1st candle back
+   // c3 = 2nd
+   // c2 = 3rd
+   // c1 = 4th
+   // c0 = current (5th candle)
+   int c4 = shift + 4;
+   int c3 = shift + 3;
+   int c2 = shift + 2;
+   int c1 = shift + 1;
+   int c0 = shift;
+
+   // Candle color check
+   bool white(int i) { return Close[i] > Open[i]; }
+   bool black(int i) { return Open[i] > Close[i]; }
+
+   // Gaps
+   bool gapDown = (Open[c3] < Close[c4] && Close[c3] < Open[c4]);
+   bool gapUp   = (Open[c3] > Close[c4] && Close[c3] > Open[c4]);
+
+   // Long body condition (1st candle)
+   bool isLong = MathAbs(Close[c4] - Open[c4]) > avgLongBody;
+
+   // Colors: 1st, 2nd, 4th same; 5th opposite to 4th
+   bool sameColor_1_2_4 =
+      ((white(c4) && white(c3) && white(c1)) ||
+       (black(c4) && black(c3) && black(c1)));
+
+   bool fifthOpposite =
+      (white(c1) && black(c0)) ||
+      (black(c1) && white(c0));
+
+   // ---------------------------------------------------------
+   // CONDITIONS FOR BEARISH BREAKAWAY
+   // 1st = long black
+   // 2nd = gaps down
+   // 3rd lower highs/lows
+   // 4th lower highs/lows
+   // 5th closes inside gap
+   // ---------------------------------------------------------
+   bool bearishPattern =
+      black(c4) && isLong &&
+      sameColor_1_2_4 &&
+      fifthOpposite &&
+      gapDown &&
+      High[c2] < High[c3] && Low[c2] < Low[c3] &&
+      High[c1] < High[c2] && Low[c1] < Low[c2] &&
+      Close[c0] > Open[c3] && Close[c0] < Close[c4];
+
+   // ---------------------------------------------------------
+   // CONDITIONS FOR BULLISH BREAKAWAY
+   // Exact mirror of bearish case
+   // ---------------------------------------------------------
+   bool bullishPattern =
+      white(c4) && isLong &&
+      sameColor_1_2_4 &&
+      fifthOpposite &&
+      gapUp &&
+      High[c2] > High[c3] && Low[c2] > Low[c3] &&
+      High[c1] > High[c2] && Low[c1] > Low[c2] &&
+      Close[c0] < Open[c3] && Close[c0] > Close[c4];
+
+   if (bullishPattern) return +1;
+   if (bearishPattern) return -1;
+
+   return 0;
+}
 
 //+------------------------------------------------------------------+
 //| CDLKICKING Pattern Detection Function                            |
