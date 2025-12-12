@@ -628,18 +628,18 @@ bool CDL3WHITESOLDIERS(int shift = 0)
 //+------------------------------------------------------------------+
 //| CDLRISEFALL3METHODS Pattern Detection Function                   |
 //+------------------------------------------------------------------+
-bool CDLRISEFALL3METHODS(int i)
+bool CDLRISEFALL3METHODS(int shift = 0)
 {
-   // We need candles i..i+4
-   if(i+4 >= Bars)
+   // We need candles shift..shift+4
+   if(Bars < shift + 5)
       return false;
 
    // Extract OHLC
-   double o0 = Open[i];     double c0 = Close[i];     double h0 = High[i];     double l0 = Low[i];
-   double o1 = Open[i+1];   double c1 = Close[i+1];   double h1 = High[i+1];   double l1 = Low[i+1];
-   double o2 = Open[i+2];   double c2 = Close[i+2];   double h2 = High[i+2];   double l2 = Low[i+2];
-   double o3 = Open[i+3];   double c3 = Close[i+3];   double h3 = High[i+3];   double l3 = Low[i+3];
-   double o4 = Open[i+4];   double c4 = Close[i+4];   double h4 = High[i+4];   double l4 = Low[i+4];
+   double o0 = Open[shift];     double c0 = Close[shift];     double h0 = High[shift];     double l0 = Low[shift];
+   double o1 = Open[shift+1];   double c1 = Close[shift+1];   double h1 = High[shift+1];   double l1 = Low[shift+1];
+   double o2 = Open[shift+2];   double c2 = Close[shift+2];   double h2 = High[shift+2];   double l2 = Low[shift+2];
+   double o3 = Open[shift+3];   double c3 = Close[shift+3];   double h3 = High[shift+3];   double l3 = Low[shift+3];
+   double o4 = Open[shift+4];   double c4 = Close[shift+4];   double h4 = High[shift+4];   double l4 = Low[shift+4];
 
    // Body sizes
    double body0 = MathAbs(c0 - o0);
@@ -649,7 +649,7 @@ bool CDLRISEFALL3METHODS(int i)
    double body4 = MathAbs(c4 - o4);
 
    // Body average via EMA 14 (TA equivalent)
-   double bodyAvg = iMA(NULL,0,14,0,MODE_EMA,PRICE_CLOSE,i);
+   double bodyAvg = iMA(NULL,0,14,0,MODE_EMA,PRICE_CLOSE,shift);
 
    bool long0 = body0 > bodyAvg;
    bool long4 = body4 > bodyAvg;
@@ -667,7 +667,7 @@ bool CDLRISEFALL3METHODS(int i)
    bool black3 = (c3 < o3);
 
    // Trend check equivalent to C_UpTrend[4]
-   bool upTrend4 = (c4 > iMA(NULL,0,50,0,MODE_SMA,PRICE_CLOSE,i+4));
+   bool upTrend4 = (c4 > iMA(NULL,0,50,0,MODE_SMA,PRICE_CLOSE,shift+4));
 
    // Middle three candles inside candle 4 range
    bool inside1 = (o1 < h4 && c1 > l4);
@@ -690,7 +690,6 @@ bool CDLRISEFALL3METHODS(int i)
 
    return false;
 }
-
 
 //+------------------------------------------------------------------+
 //| CDLMATHOLD Pattern Detection Function                            |
