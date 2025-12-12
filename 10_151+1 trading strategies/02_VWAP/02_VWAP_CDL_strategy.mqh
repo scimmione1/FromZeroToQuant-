@@ -949,6 +949,85 @@ bool CDL3OUTSIDEUP(int i)
 //+------------------------------------------------------------------+
 //| CDBELTHOLD Pattern Detection Function                            |
 //+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
+//| Belt-Hold Candlestick Pattern (Bullish = +1, Bearish = -1)       |
+//| MQL4 adaptation from QuantConnect BeltHold indicator             |
+//+------------------------------------------------------------------+
+int CDBELTHOLD(int shift = 0)
+{
+   // Safety check: need at least one candle
+   if (shift + 1 >= Bars) return 0;
+
+   // Parameters (can be externalized)
+   int BodyLongPeriod      = 10;   // average period for long real body
+   int ShadowVeryShortPeriod = 10; // average period for very short shadow
+
+   //--------------------------------------------------------------
+   // Compute averages for: real body, upper shadow, lower shadow
+   //--------------------------------------------------------------
+   double bodySum = 0;
+   double shadowShortSum = 0;
+
+   for(int i = shift + 1; i <= shift + BodyLongPeriod; i++)
+   {
+      if(i >= Bars - 1) break;
+      double body = MathAbs(Close[i] - Open[i]);
+      bodySum += body;
+   }
+   double avgLongBody = bodySum / BodyLongPeriod;
+
+   for(int i = shift + 1; i <= shift + ShadowVeryShortPeriod; i++)
+   {
+      if(i >= Bars - 1) break;
+      double upShadow   = High[i] - MathMax(Open[i], Close[i]);
+      double dnShadow   = MathMin(Open[i], Close[i]) - Low[i];
+      double shadowRange = (upShadow + dnShadow) / 2.0;
+      shadowShortSum += shadowRange;
+   }
+   double avgVeryShortShadow = shadowShortSum / ShadowVeryShortPeriod;
+
+   //--------------------------------------------------------------
+   // Current candle data
+   //--------------------------------------------------------------
+   double o = Open[shift];
+   double c = Close[shift];
+   double h = High[shift];
+   double l = Low[shift];
+
+   double realBody = MathAbs(c - o);
+
+   double upperShadow = h - MathMax(o, c);
+   double lowerShadow = MathMin(o, c) - l;
+
+   bool white = (c > o);
+   bool black = (o > c);
+
+   //--------------------------------------------------------------
+   // Pattern conditions
+   //--------------------------------------------------------------
+
+   // Body must be long
+   bool condLongBody = (realBody > avgLongBody);
+
+   // For bullish Belt-Hold:
+   // Long white body and lower shadow almost absent
+   bool bullish =
+      white &&
+      condLongBody &&
+      (lowerShadow < avgVeryShortShadow);
+
+   // For bearish Belt-Hold:
+   // Long black body and upper shadow almost absent
+   bool bearish =
+      black &&
+      condLongBody &&
+      (upperShadow < avgVeryShortShadow);
+
+   if(bullish) return +1;
+   if(bearish) return -1;
+
+   return 0;
+}
 
 //+------------------------------------------------------------------+
 //| CDLBREAKAWAY Pattern Detection Function                          |
