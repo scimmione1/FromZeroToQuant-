@@ -129,41 +129,55 @@ void GetActiveCandlePattern(bool &isBullish)
    // Add other patterns as needed
 
    return ;
-
-   
 }
 
 //+------------------------------------------------------------------+
 //| CDLHAMMER Pattern Detection Function                             |
 //+------------------------------------------------------------------+
-bool CDLHAMMER(MqlRates &rates[])
-  {
-   if(ArraySize(rates) < 1)
+bool CDLHAMMER(int shift = 0)
+{
+   if(Bars < shift + 1)
       return false;
-   double bodySize = MathAbs(rates[0].open - rates[0].close);
-   double totalRange = rates[0].high - rates[0].low;
-   double lowerShadow = MathMin(rates[0].open, rates[0].close) - rates[0].low;
-   double upperShadow = rates[0].high - MathMax(rates[0].open, rates[0].close);
+   
+   double O = Open[shift];
+   double C = Close[shift];
+   double H = High[shift];
+   double L = Low[shift];
+   
+   double bodySize = MathAbs(O - C);
+   double totalRange = H - L;
+   double lowerShadow = MathMin(O, C) - L;
+   double upperShadow = H - MathMax(O, C);
+   
    if(totalRange == 0)
       return false;
+   
    return (bodySize / totalRange < 0.3 && lowerShadow >= 2 * bodySize && upperShadow <= bodySize * 0.5);
-  }
+}
 
 //+------------------------------------------------------------------+
 //| CDLINVERTEDHAMMER Pattern Detection Function                     |
 //+------------------------------------------------------------------+
-bool CDLINVERTEDHAMMER(MqlRates &rates[])
-  {
-   if(ArraySize(rates) < 1)
+bool CDLINVERTEDHAMMER(int shift = 0)
+{
+   if(Bars < shift + 1)
       return false;
-   double bodySize = MathAbs(rates[0].open - rates[0].close);
-   double totalRange = rates[0].high - rates[0].low;
-   double lowerShadow = MathMin(rates[0].open, rates[0].close) - rates[0].low;
-   double upperShadow = rates[0].high - MathMax(rates[0].open, rates[0].close);
+   
+   double O = Open[shift];
+   double C = Close[shift];
+   double H = High[shift];
+   double L = Low[shift];
+   
+   double bodySize = MathAbs(O - C);
+   double totalRange = H - L;
+   double lowerShadow = MathMin(O, C) - L;
+   double upperShadow = H - MathMax(O, C);
+   
    if(totalRange == 0)
       return false;
+   
    return (bodySize / totalRange < 0.3 && upperShadow >= 2 * bodySize && lowerShadow <= bodySize * 0.5);
-  }
+}
 
 //+------------------------------------------------------------------+
 //| CDLMORNINGSTAR Pattern Detection Function                        |
