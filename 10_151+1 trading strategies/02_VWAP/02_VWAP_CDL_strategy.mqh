@@ -1124,6 +1124,111 @@ int CDLBREAKAWAY(int shift = 0)
 //+------------------------------------------------------------------+
 //| CDLKICKING Pattern Detection Function                            |
 //+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
+//| CDL Kicking Pattern Detection                                    |
+//| Returns: +1 bullish, -1 bearish, 0 no pattern                    |
+//+------------------------------------------------------------------+
+int CDLKICKING(int shift = 0)
+{
+   // Need at least 2 candles
+   if (shift + 1 >= Bars) return 0;
+
+   // Adjustable "settings" similar to QC
+   int BodyLongPeriod = 10;
+   int ShadowVeryShortPeriod = 10;
+
+   //---------------------------------------------------------
+   // Compute averages for the last 10 candles
+   //---------------------------------------------------------
+   double bodyLongAvg[2] = {0.0, 0.0};       // 0 = current, 1 = previous
+   double shadowShortAvg[2] = {0.0, 0.0};
+
+   for (int i = 0; i < BodyLongPeriod; i++)
+   {
+      if (shift + i >= Bars) break;
+      bodyLongAvg[1] += MathAbs(Close[shift + 1 + i] - Open[shift + 1 + i]);
+      bodyLongAvg[0] += MathAbs(Close[shift + i] - Open[shift + i]);
+   }
+
+   bodyLongAvg[1] /= BodyLongPeriod;
+   bodyLongAvg[0] /= BodyLongPeriod;
+
+   for (int i = 0; i < ShadowVeryShortPeriod; i++)
+   {
+      if (shift + i >= Bars) break;
+
+      shadowShortAvg[1] += (High[shift + 1 + i] - MathMax(Open[shift + 1 + i], Close[shift + 1 + i])); // upper shadow prev
+      shadowShortAvg[1] += (MathMin(Open[shift + 1 + i], Close[shift + 1 + i]) - Low[shift + 1 + i]);  // lower shadow prev
+
+      shadowShortAvg[0] += (High[shift + i] - MathMax(Open[shift + i], Close[shift + i])); // upper shadow current
+      shadowShortAvg[0] += (MathMin(Open[shift + i], Close[shift + i]) - Low[shift + i]);  // lower shadow current
+   }
+
+   shadowShortAvg[1] /= (2 * ShadowVeryShortPeriod);
+   shadowShortAvg[0] /= (2 * ShadowVeryShortPeriod);
+
+   //---------------------------------------------------------
+   // Candle identifiers
+   //---------------------------------------------------------
+   int c1 = shift + 1;   // first candle (older)
+   int c0 = shift;       // second candle (current)
+
+   //---------------------------------------------------------
+   // Helper definitions
+   //---------------------------------------------------------
+   bool white(int i) { return Close[i] > Open[i]; }
+   bool black(int i) { return Open[i] > Close[i]; }
+
+   double body(int i)  { return MathAbs(Close[i] - Open[i]); }
+   double upper(int i) { return High[i] - MathMax(Open[i], Close[i]); }
+   double lower(int i) { return MathMin(Open[i], Close[i]) - Low[i]; }
+
+   //---------------------------------------------------------
+   // Conditions
+   //---------------------------------------------------------
+
+   // Opposite colors
+   bool oppositeColor = 
+         (white(c1) && black(c0)) ||
+         (black(c1) && white(c0));
+
+   // Marubozu = long body + very small shadows
+   bool marubozu1 =
+      body(c1) > bodyLongAvg[1] &&
+      upper(c1) < shadowShortAvg[1] &&
+      lower(c1) < shadowShortAvg[1];
+
+   bool marubozu0 =
+      body(c0) > bodyLongAvg[0] &&
+      upper(c0) < shadowShortAvg[0] &&
+      lower(c0) < shadowShortAvg[0];
+
+   // Gaps
+   bool gapUp = (Open[c0] > High[c1] && Close[c0] > High[c1]);
+   bool gapDown = (Open[c0] < Low[c1] && Close[c0] < Low[c1]);
+
+   //---------------------------------------------------------
+   // Final Kicking pattern logic
+   //---------------------------------------------------------
+   bool bullish =
+      oppositeColor &&
+      marubozu1 &&
+      marubozu0 &&
+      black(c1) && white(c0) &&
+      gapUp;
+
+   bool bearish =
+      oppositeColor &&
+      marubozu1 &&
+      marubozu0 &&
+      white(c1) && black(c0) &&
+      gapDown;
+
+   if (bullish) return +1;
+   if (bearish) return -1;
+
+   return 0;
+}
 
 //+------------------------------------------------------------------+
 //| CDLKICKINGBYLENGTH Pattern Detection Function                    |
