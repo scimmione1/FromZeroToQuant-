@@ -531,31 +531,31 @@ bool CDLTAKURI(int shift = 0)
 }
 
 //+------------------------------------------------------------------+
-//| CDL3WHITESOLDIERS Pattern Detection Function                             |
+//| CDL3WHITESOLDIERS Pattern Detection Function                     |
 //+------------------------------------------------------------------+
-bool CDL3WHITESOLDIERS(int i)
+bool CDL3WHITESOLDIERS(int shift = 0)
 {
-   // We need i, i+1, i+2
-   if(i+2 >= Bars)
+   // We need shift, shift+1, shift+2
+   if(Bars < shift + 3)
       return false;
 
    // Candle 0 (current)
-   double o0 = Open[i];
-   double c0 = Close[i];
-   double h0 = High[i];
-   double l0 = Low[i];
+   double o0 = Open[shift];
+   double c0 = Close[shift];
+   double h0 = High[shift];
+   double l0 = Low[shift];
 
    // Candle 1
-   double o1 = Open[i+1];
-   double c1 = Close[i+1];
-   double h1 = High[i+1];
-   double l1 = Low[i+1];
+   double o1 = Open[shift + 1];
+   double c1 = Close[shift + 1];
+   double h1 = High[shift + 1];
+   double l1 = Low[shift + 1];
 
    // Candle 2
-   double o2 = Open[i+2];
-   double c2 = Close[i+2];
-   double h2 = High[i+2];
-   double l2 = Low[i+2];
+   double o2 = Open[shift + 2];
+   double c2 = Close[shift + 2];
+   double h2 = High[shift + 2];
+   double l2 = Low[shift + 2];
 
    // Body sizes
    double body0 = MathAbs(c0 - o0);
@@ -563,7 +563,7 @@ bool CDL3WHITESOLDIERS(int i)
    double body2 = MathAbs(c2 - o2);
 
    // Body average (EMA of 14 periods, PineScript equivalent)
-   double bodyAvg = iMA(NULL, 0, 14, 0, MODE_EMA, PRICE_CLOSE, i);
+   double bodyAvg = iMA(NULL, 0, 14, 0, MODE_EMA, PRICE_CLOSE, shift);
 
    bool long0 = body0 > bodyAvg;
    bool long1 = body1 > bodyAvg;
