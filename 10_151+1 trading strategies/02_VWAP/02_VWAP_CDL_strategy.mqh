@@ -1188,6 +1188,96 @@ bool CDLMATCHINGLOW(int shift = 0, double tolerancePoints = 0.0)
 //+------------------------------------------------------------------+
 //| CDLUNIQUE3RIVER Pattern Detection Function                       |
 //+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
+//| Unique Three River Pattern Detection                              |
+//| Return: +1 bullish, 0 no pattern                                  |
+//+------------------------------------------------------------------+
+int CDLUNIQUE3RIVER(int shift = 0)
+{
+   // Servono almeno 3 candele
+   if(shift + 2 >= Bars) return 0;
+
+   //------------------------------------------------------
+   // CandleSettings (approssimazione QuantConnect)
+   //------------------------------------------------------
+   int BodyLongPeriod  = 10;
+   int BodyShortPeriod = 10;
+
+   //------------------------------------------------------
+   // Indici candele
+   //------------------------------------------------------
+   int c2 = shift + 2; // prima
+   int c1 = shift + 1; // seconda
+   int c0 = shift;     // terza
+
+   //------------------------------------------------------
+   // Helper values (inline functions not allowed in MQL4)
+   //------------------------------------------------------
+   bool isBlack_c2 = Open[c2] > Close[c2];
+   bool isBlack_c1 = Open[c1] > Close[c1];
+   bool isWhite_c0 = Close[c0] > Open[c0];
+   
+   double realBody_c2 = MathAbs(Open[c2] - Close[c2]);
+   double realBody_c0 = MathAbs(Open[c0] - Close[c0]);
+
+   //------------------------------------------------------
+   // Media BodyLong
+   //------------------------------------------------------
+   double bodyLongAvg = 0.0;
+   for(int i=0; i<BodyLongPeriod; i++)
+   {
+      int idx = c2 + i;
+      if(idx >= Bars) break;
+
+      bodyLongAvg += MathAbs(Open[idx] - Close[idx]);
+   }
+   bodyLongAvg /= BodyLongPeriod;
+
+   //------------------------------------------------------
+   // Media BodyShort
+   //------------------------------------------------------
+   double bodyShortAvg = 0.0;
+   for(int j=0; j<BodyShortPeriod; j++)
+   {
+      int idx = c0 + j;
+      if(idx >= Bars) break;
+
+      bodyShortAvg += MathAbs(Open[idx] - Close[idx]);
+   }
+   bodyShortAvg /= BodyShortPeriod;
+
+   //------------------------------------------------------
+   // Condizioni Unique Three River
+   //------------------------------------------------------
+   bool firstLongBlack =
+      isBlack_c2 &&
+      realBody_c2 > bodyLongAvg;
+
+   bool secondBlackHarami =
+      isBlack_c1 &&
+      Close[c1] > Close[c2] &&
+      Open[c1] <= Open[c2] &&
+      Low[c1] < Low[c2];
+
+   bool thirdShortWhite =
+      isWhite_c0 &&
+      realBody_c0 < bodyShortAvg &&
+      Open[c0] > Low[c1];
+
+   //------------------------------------------------------
+   // Output
+   //------------------------------------------------------
+   if(
+      firstLongBlack &&
+      secondBlackHarami &&
+      thirdShortWhite
+     )
+   {
+      return 1; // sempre bullish
+   }
+
+   return 0;
+}
 
 //+------------------------------------------------------------------+
 //| CDL3INSIDE Pattern Detection Function (Bullish & Bearish)        |
