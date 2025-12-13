@@ -1959,6 +1959,10 @@ int CDLSTICKSANDWICH(int shift = 0)
 //+------------------------------------------------------------------+
 double CalculateVWAP(int period)
 {
+   // Check if we have enough bars
+   if(Bars < period)
+      return 0.0;
+
    double cumulativeTPV = 0.0; // Cumulative Typical Price * Volume
    double cumulativeVolume = 0.0; // Cumulative Volume
 
