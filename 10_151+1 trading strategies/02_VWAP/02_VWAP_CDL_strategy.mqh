@@ -1543,9 +1543,17 @@ int CDLBREAKAWAY(int shift = 0)
    int c1 = shift + 1;
    int c0 = shift;
 
-   // Candle color check
-   bool white(int i) { return Close[i] > Open[i]; }
-   bool black(int i) { return Open[i] > Close[i]; }
+   //------------------------------------------------------
+   // Helper values (inline functions not allowed in MQL4)
+   //------------------------------------------------------
+   bool white_c4 = Close[c4] > Open[c4];
+   bool white_c3 = Close[c3] > Open[c3];
+   bool white_c1 = Close[c1] > Open[c1];
+   bool white_c0 = Close[c0] > Open[c0];
+   bool black_c4 = Open[c4] > Close[c4];
+   bool black_c3 = Open[c3] > Close[c3];
+   bool black_c1 = Open[c1] > Close[c1];
+   bool black_c0 = Open[c0] > Close[c0];
 
    // Gaps
    bool gapDown = (Open[c3] < Close[c4] && Close[c3] < Open[c4]);
@@ -1556,12 +1564,12 @@ int CDLBREAKAWAY(int shift = 0)
 
    // Colors: 1st, 2nd, 4th same; 5th opposite to 4th
    bool sameColor_1_2_4 =
-      ((white(c4) && white(c3) && white(c1)) ||
-       (black(c4) && black(c3) && black(c1)));
+      ((white_c4 && white_c3 && white_c1) ||
+       (black_c4 && black_c3 && black_c1));
 
    bool fifthOpposite =
-      (white(c1) && black(c0)) ||
-      (black(c1) && white(c0));
+      (white_c1 && black_c0) ||
+      (black_c1 && white_c0);
 
    // ---------------------------------------------------------
    // CONDITIONS FOR BEARISH BREAKAWAY
@@ -1572,7 +1580,7 @@ int CDLBREAKAWAY(int shift = 0)
    // 5th closes inside gap
    // ---------------------------------------------------------
    bool bearishPattern =
-      black(c4) && isLong &&
+      black_c4 && isLong &&
       sameColor_1_2_4 &&
       fifthOpposite &&
       gapDown &&
@@ -1585,7 +1593,7 @@ int CDLBREAKAWAY(int shift = 0)
    // Exact mirror of bearish case
    // ---------------------------------------------------------
    bool bullishPattern =
-      white(c4) && isLong &&
+      white_c4 && isLong &&
       sameColor_1_2_4 &&
       fifthOpposite &&
       gapUp &&
@@ -1652,14 +1660,19 @@ int CDLKICKING(int shift = 0)
    int c0 = shift;       // second candle (current)
 
    //---------------------------------------------------------
-   // Helper definitions
+   // Helper values (inline functions not allowed in MQL4)
    //---------------------------------------------------------
-   bool white(int i) { return Close[i] > Open[i]; }
-   bool black(int i) { return Open[i] > Close[i]; }
-
-   double body(int i)  { return MathAbs(Close[i] - Open[i]); }
-   double upper(int i) { return High[i] - MathMax(Open[i], Close[i]); }
-   double lower(int i) { return MathMin(Open[i], Close[i]) - Low[i]; }
+   bool white_c1 = Close[c1] > Open[c1];
+   bool white_c0 = Close[c0] > Open[c0];
+   bool black_c1 = Open[c1] > Close[c1];
+   bool black_c0 = Open[c0] > Close[c0];
+   
+   double body_c1 = MathAbs(Close[c1] - Open[c1]);
+   double body_c0 = MathAbs(Close[c0] - Open[c0]);
+   double upper_c1 = High[c1] - MathMax(Open[c1], Close[c1]);
+   double upper_c0 = High[c0] - MathMax(Open[c0], Close[c0]);
+   double lower_c1 = MathMin(Open[c1], Close[c1]) - Low[c1];
+   double lower_c0 = MathMin(Open[c0], Close[c0]) - Low[c0];
 
    //---------------------------------------------------------
    // Conditions
@@ -1667,19 +1680,19 @@ int CDLKICKING(int shift = 0)
 
    // Opposite colors
    bool oppositeColor = 
-         (white(c1) && black(c0)) ||
-         (black(c1) && white(c0));
+         (white_c1 && black_c0) ||
+         (black_c1 && white_c0);
 
    // Marubozu = long body + very small shadows
    bool marubozu1 =
-      body(c1) > bodyLongAvg[1] &&
-      upper(c1) < shadowShortAvg[1] &&
-      lower(c1) < shadowShortAvg[1];
+      body_c1 > bodyLongAvg[1] &&
+      upper_c1 < shadowShortAvg[1] &&
+      lower_c1 < shadowShortAvg[1];
 
    bool marubozu0 =
-      body(c0) > bodyLongAvg[0] &&
-      upper(c0) < shadowShortAvg[0] &&
-      lower(c0) < shadowShortAvg[0];
+      body_c0 > bodyLongAvg[0] &&
+      upper_c0 < shadowShortAvg[0] &&
+      lower_c0 < shadowShortAvg[0];
 
    // Gaps
    bool gapUp = (Open[c0] > High[c1] && Close[c0] > High[c1]);
@@ -1692,14 +1705,14 @@ int CDLKICKING(int shift = 0)
       oppositeColor &&
       marubozu1 &&
       marubozu0 &&
-      black(c1) && white(c0) &&
+      black_c1 && white_c0 &&
       gapUp;
 
    bool bearish =
       oppositeColor &&
       marubozu1 &&
       marubozu0 &&
-      white(c1) && black(c0) &&
+      white_c1 && black_c0 &&
       gapDown;
 
    if (bullish) return +1;
@@ -1764,34 +1777,39 @@ int CDLKICKINGBYLENGTH(int shift = 0)
    int c0 = shift;       // second (current)
 
    //---------------------------------------------------------
-   // Helper definitions
+   // Helper values (inline functions not allowed in MQL4)
    //---------------------------------------------------------
-   bool white(int i) { return Close[i] > Open[i]; }
-   bool black(int i) { return Open[i] > Close[i]; }
-
-   double body(int i)  { return MathAbs(Close[i] - Open[i]); }
-   double upper(int i) { return High[i] - MathMax(Open[i], Close[i]); }
-   double lower(int i) { return MathMin(Open[i], Close[i]) - Low[i]; }
+   bool white_c1 = Close[c1] > Open[c1];
+   bool white_c0 = Close[c0] > Open[c0];
+   bool black_c1 = Open[c1] > Close[c1];
+   bool black_c0 = Open[c0] > Close[c0];
+   
+   double body_c1 = MathAbs(Close[c1] - Open[c1]);
+   double body_c0 = MathAbs(Close[c0] - Open[c0]);
+   double upper_c1 = High[c1] - MathMax(Open[c1], Close[c1]);
+   double upper_c0 = High[c0] - MathMax(Open[c0], Close[c0]);
+   double lower_c1 = MathMin(Open[c1], Close[c1]) - Low[c1];
+   double lower_c0 = MathMin(Open[c0], Close[c0]) - Low[c0];
 
    //---------------------------------------------------------
    // Opposite colors
    //---------------------------------------------------------
    bool opposite =
-         (white(c1) && black(c0)) ||
-         (black(c1) && white(c0));
+         (white_c1 && black_c0) ||
+         (black_c1 && white_c0);
 
    //---------------------------------------------------------
    // Marubozu: long body + very short shadows
    //---------------------------------------------------------
    bool marubozu1 =
-         body(c1) > bodyLongAvg[1] &&
-         upper(c1) < shadowShortAvg[1] &&
-         lower(c1) < shadowShortAvg[1];
+         body_c1 > bodyLongAvg[1] &&
+         upper_c1 < shadowShortAvg[1] &&
+         lower_c1 < shadowShortAvg[1];
 
    bool marubozu0 =
-         body(c0) > bodyLongAvg[0] &&
-         upper(c0) < shadowShortAvg[0] &&
-         lower(c0) < shadowShortAvg[0];
+         body_c0 > bodyLongAvg[0] &&
+         upper_c0 < shadowShortAvg[0] &&
+         lower_c0 < shadowShortAvg[0];
 
    //---------------------------------------------------------
    // GAP rules
@@ -1807,8 +1825,8 @@ int CDLKICKINGBYLENGTH(int shift = 0)
       marubozu1 &&
       marubozu0 &&
       (
-        (black(c1) && white(c0) && gapUp) ||
-        (white(c1) && black(c0) && gapDown)
+        (black_c1 && white_c0 && gapUp) ||
+        (white_c1 && black_c0 && gapDown)
       );
 
    if (!validPattern) return 0;
@@ -1816,14 +1834,11 @@ int CDLKICKINGBYLENGTH(int shift = 0)
    //---------------------------------------------------------
    // KickingByLength: il colore è determinato dal marubozu più lungo
    //---------------------------------------------------------
-   double body1 = body(c1);
-   double body0 = body(c0);
-
    // pattern bullish se la candela con corpo più lungo è bianca
-   if (body0 > body1)
-      return white(c0) ? +1 : -1;
+   if (body_c0 > body_c1)
+      return white_c0 ? +1 : -1;
    else
-      return white(c1) ? +1 : -1;
+      return white_c1 ? +1 : -1;
 }
 
 //+------------------------------------------------------------------+
@@ -1865,17 +1880,21 @@ int CDLSTICKSANDWICH(int shift = 0)
    int c0 = shift;       // Third candle (current)
 
    //-------------------------------------------------------------
-   // Helper functions
+   // Helper values (inline functions not allowed in MQL4)
    //-------------------------------------------------------------
-   bool white(int i) { return Close[i] > Open[i]; }
-   bool black(int i) { return Open[i] > Close[i]; }
+   bool white_c2 = Close[c2] > Open[c2];
+   bool white_c1 = Close[c1] > Open[c1];
+   bool white_c0 = Close[c0] > Open[c0];
+   bool black_c2 = Open[c2] > Close[c2];
+   bool black_c1 = Open[c1] > Close[c1];
+   bool black_c0 = Open[c0] > Close[c0];
 
    //-------------------------------------------------------------
    // Condizioni del pattern Stick Sandwich
    //-------------------------------------------------------------
-   bool firstBlack  = black(c2);
-   bool secondWhite = white(c1);
-   bool thirdBlack  = black(c0);
+   bool firstBlack  = black_c2;
+   bool secondWhite = white_c1;
+   bool thirdBlack  = black_c0;
 
    bool secondLowAboveFirstClose = Low[c1] > Close[c2];
 
@@ -1894,7 +1913,6 @@ int CDLSTICKSANDWICH(int shift = 0)
 
    return 0;
 }
-
 
 //+------------------------------------------------------------------+
 //| VWAP Calculation function                                        |
@@ -1918,7 +1936,6 @@ double CalculateVWAP(int period)
 
    return cumulativeTPV / cumulativeVolume;
 }
-
 
 //+------------------------------------------------------------------+
 //| OnTick()                                                         |
