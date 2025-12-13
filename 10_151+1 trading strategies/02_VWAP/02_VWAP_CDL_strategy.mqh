@@ -4,12 +4,15 @@
 #property strict
 
 // === Parameters generali ===
-extern int    MagicNumber       = 253;      // Magic Number EA
-extern double AccountRisk       = 0.01;     // Account risk per trade
+extern int    MagicNumber       = 257;      // Magic Number EA
+//extern double AccountRisk       = 0.01;     // Account risk per trade
 extern double RiskPercent       = 1.0;      // % risk per trade
 extern double MaxLot            = 0.1;      // Maximum allowed lot
 extern bool UseFixedLot         = true;     // true = use fixed lot, false = percentage calculation
 extern double FixedLot          = 0.05;     // Fixed lot when UseFixedLot = true
+extern bool TradeStocks         = false;    // true = stocks (int lot), false = forex/index (double lot)
+extern int  FixedLotInt         = 1;        // Fixed lot (shares) when TradeStocks = true
+extern int  MaxLotInt           = 100;      // Maximum shares when TradeStocks = true
 extern int   VWAP_Period        = 14;       // VWAP calculation period
 
 // === Dynamic ATR Parameters ===
@@ -53,10 +56,14 @@ extern bool CDLKICKINGBYLENGTH     = false;
 extern bool CDLSTICKSANDWICH       = false;
 
 //+------------------------------------------------------------------+
-//| Dynamic lot calculation based on risk                            |
+//| Dynamic lot calculation based on risk (for Forex/Index)          |
 //+------------------------------------------------------------------+
 double CalculateLotSize(double stopLossPips)
 {
+   // If trading stocks, use integer lot function and cast to double
+   if (TradeStocks)
+      return (double)CalculateLotSizeInt(stopLossPips);
+
    if (UseFixedLot)
       return MathMin(FixedLot, MaxLot); // Use fixed lot, limited to MaxLot
 
@@ -74,6 +81,38 @@ double CalculateLotSize(double stopLossPips)
    // Limit the maximum lot size anyway
    lotSize = MathMin(lotSize, MaxLot);
    return NormalizeDouble(lotSize, 2);
+}
+
+//+------------------------------------------------------------------+
+//| Dynamic lot calculation based on risk (for Stocks - int shares)  |
+//+------------------------------------------------------------------+
+int CalculateLotSizeInt(double stopLossPips)
+{
+   if (UseFixedLot)
+      return MathMin(FixedLotInt, MaxLotInt); // Use fixed shares, limited to MaxLotInt
+
+   double riskAmount = AccountBalance() * (RiskPercent / 100.0);
+   int shares = 0;
+   
+   // For stocks: calculate number of shares based on risk
+   // stopLossPips here represents the price distance to stop loss
+   double currentPrice = MarketInfo(Symbol(), MODE_BID);
+   
+   if (stopLossPips > 0 && currentPrice > 0)
+   {
+      // Risk per share = stop loss distance in price terms
+      double riskPerShare = stopLossPips * Point;
+      if (riskPerShare > 0)
+         shares = (int)MathFloor(riskAmount / riskPerShare);
+   }
+   
+   // Minimum 1 share
+   if (shares < 1)
+      shares = 1;
+
+   // Limit the maximum number of shares
+   shares = MathMin(shares, MaxLotInt);
+   return shares;
 }
 
 //+------------------------------------------------------------------+
