@@ -1053,6 +1053,100 @@ bool CDLABANDONEDBABY(int shift = 0)
 //+------------------------------------------------------------------+
 //| CDLLADDERBOTTOM Pattern Detection Function                       |
 //+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
+//| Ladder Bottom Pattern Detection                                  |
+//| Return: +1 bullish, 0 no pattern                                 |
+//+------------------------------------------------------------------+
+int CDLLADDERBOTTOM(int shift = 0)
+{
+   // Servono almeno 5 candele
+   if(shift + 4 >= Bars) return 0;
+
+   //------------------------------------------------------
+   // CandleSettings (approssimazione QuantConnect)
+   //------------------------------------------------------
+   int ShadowVeryShortPeriod = 10;
+
+   //------------------------------------------------------
+   // Indici candele
+   //------------------------------------------------------
+   int c4 = shift + 4; // 1ª nera
+   int c3 = shift + 3; // 2ª nera
+   int c2 = shift + 2; // 3ª nera
+   int c1 = shift + 1; // 4ª nera con upper shadow
+   int c0 = shift;     // 5ª bianca
+
+   //------------------------------------------------------
+   // Helper values (inline functions not allowed in MQL4)
+   //------------------------------------------------------
+   bool isBlack_c4 = Open[c4] > Close[c4];
+   bool isBlack_c3 = Open[c3] > Close[c3];
+   bool isBlack_c2 = Open[c2] > Close[c2];
+   bool isBlack_c1 = Open[c1] > Close[c1];
+   bool isWhite_c0 = Close[c0] > Open[c0];
+   
+   double upperShadow_c1 = High[c1] - MathMax(Open[c1], Close[c1]);
+
+   //------------------------------------------------------
+   // Media ShadowVeryShort
+   //------------------------------------------------------
+   double shadowAvg = 0.0;
+   for(int i=0; i<ShadowVeryShortPeriod; i++)
+   {
+      int idx = shift + 1 + i;
+      if(idx >= Bars) break;
+
+      shadowAvg += High[idx] - MathMax(Open[idx], Close[idx]);
+   }
+   shadowAvg /= ShadowVeryShortPeriod;
+
+   //------------------------------------------------------
+   // Condizioni Ladder Bottom
+   //------------------------------------------------------
+   bool threeBlack =
+      isBlack_c4 &&
+      isBlack_c3 &&
+      isBlack_c2;
+
+   bool lowerOpens =
+      Open[c4] > Open[c3] &&
+      Open[c3] > Open[c2];
+
+   bool lowerCloses =
+      Close[c4] > Close[c3] &&
+      Close[c3] > Close[c2];
+
+   bool fourthBlackWithShadow =
+      isBlack_c1 &&
+      upperShadow_c1 > shadowAvg;
+
+   bool fifthWhite =
+      isWhite_c0;
+
+   bool openAboveBody =
+      Open[c0] > Open[c1];
+
+   bool closeAboveHigh =
+      Close[c0] > High[c1];
+
+   //------------------------------------------------------
+   // Output
+   //------------------------------------------------------
+   if(
+      threeBlack &&
+      lowerOpens &&
+      lowerCloses &&
+      fourthBlackWithShadow &&
+      fifthWhite &&
+      openAboveBody &&
+      closeAboveHigh
+     )
+   {
+      return 1; // sempre bullish
+   }
+
+   return 0;
+}
 
 //+------------------------------------------------------------------+
 //| CDLMATCHINGLOW Pattern Detection Function                        |
