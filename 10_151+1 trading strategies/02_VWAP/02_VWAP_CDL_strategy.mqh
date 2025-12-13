@@ -1283,28 +1283,28 @@ int CDLUNIQUE3RIVER(int shift = 0)
 //| CDL3INSIDE Pattern Detection Function (Bullish & Bearish)        |
 //| Converted from TradingFinder - Three Inside Bar Pattern          |
 //+------------------------------------------------------------------+
-bool CDL3INSIDE(int i)
+bool CDL3INSIDE(int shift = 0)
 {
-   // Must have candles i, i+1, i+2
-   if(i+2 >= Bars) return false;
+   // Must have candles shift, shift+1, shift+2
+   if(Bars < shift + 3) return false;
 
    //----------------------------------------------------------------
    // Candle features
    //----------------------------------------------------------------
-   double high0 = High[i];
-   double low0  = Low[i];
-   double open0 = Open[i];
-   double close0= Close[i];
+   double high0 = High[shift];
+   double low0  = Low[shift];
+   double open0 = Open[shift];
+   double close0= Close[shift];
 
-   double high1 = High[i+1];
-   double low1  = Low[i+1];
-   double open1 = Open[i+1];
-   double close1= Close[i+1];
+   double high1 = High[shift+1];
+   double low1  = Low[shift+1];
+   double open1 = Open[shift+1];
+   double close1= Close[shift+1];
 
-   double high2 = High[i+2];
-   double low2  = Low[i+2];
-   double open2 = Open[i+2];
-   double close2= Close[i+2];
+   double high2 = High[shift+2];
+   double low2  = Low[shift+2];
+   double open2 = Open[shift+2];
+   double close2= Close[shift+2];
 
    double range0 = high0 - low0;
    double body0  = close0 - open0;
@@ -1382,24 +1382,24 @@ bool CDL3INSIDE(int i)
 //| CDL3OUTSIDEUP Pattern Detection (Bullish Reversal)               |
 //| Conversion from TradingView code1                                |
 //+------------------------------------------------------------------+
-bool CDL3OUTSIDEUP(int i)
+bool CDL3OUTSIDEUP(int shift = 0)
 {
    // Ensure enough candles
-   if(i+2 >= Bars) return false;
+   if(Bars < shift + 3) return false;
 
    //----------------------------------------------------------------
    // Extract candle data
    //----------------------------------------------------------------
-   double o0 = Open[i];
-   double c0 = Close[i];
-   double h0 = High[i];
+   double o0 = Open[shift];
+   double c0 = Close[shift];
+   double h0 = High[shift];
 
-   double o1 = Open[i+1];
-   double c1 = Close[i+1];
-   double h1 = High[i+1];
+   double o1 = Open[shift+1];
+   double c1 = Close[shift+1];
+   double h1 = High[shift+1];
 
-   double o2 = Open[i+2];
-   double c2 = Close[i+2];
+   double o2 = Open[shift+2];
+   double c2 = Close[shift+2];
 
    //----------------------------------------------------------------
    // Pattern logic (Three Outside Up)
