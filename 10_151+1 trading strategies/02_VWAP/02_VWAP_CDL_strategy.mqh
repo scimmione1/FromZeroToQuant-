@@ -332,7 +332,7 @@ bool CDLPIERCING(int shift = 0)
    // Trend condition from Pine: previous was in downtrend
    // Simplified → previous candle bearish + long body
    bool prevBearish = (prevClose < prevOpen);
-   bool prevLongBody = (prevBody > iMA(NULL, 0, 14, 0, MODE_EMA, PRICE_BODY, shift));
+   bool prevLongBody = (prevBody > iMA(NULL, 0, 14, 0, MODE_EMA, PRICE_CLOSE, shift));
 
    // Current must be bullish
    bool currBullish = (currClose > currOpen);
@@ -1927,7 +1927,7 @@ double CalculateVWAP(int period)
    for(int i = 0; i < period; i++)
    {
       double typicalPrice = (High[i] + Low[i] + Close[i]) / 3.0;
-      double volume = Volume[i];
+      double volume = (double)Volume[i];
 
       cumulativeTPV += typicalPrice * volume;
       cumulativeVolume += volume;
