@@ -815,6 +815,108 @@ int CDLMATHOLD(int shift = 0, double penetration = 0.5)
 //+------------------------------------------------------------------+
 //| CDLSEPARATINGLINES Pattern Detection Function                    |
 //+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
+//| Separating Lines Pattern Detection                               |
+//| Return: +1 bullish, -1 bearish, 0 no pattern                     |
+//+------------------------------------------------------------------+
+int CDLSEPARATINGLINES(int shift = 0)
+{
+   // Servono almeno 2 candele
+   if(Bars < shift + 2) return 0;
+
+   //------------------------------------------------------
+   // Parametri CandleSettings (approssimazione standard)
+   //------------------------------------------------------
+   int BodyLongPeriod        = 10;
+   int ShadowVeryShortPeriod = 10;
+   int EqualPeriod           = 5;
+
+   //------------------------------------------------------
+   // Indici candele
+   //------------------------------------------------------
+   int c1 = shift + 1;   // prima candela
+   int c0 = shift;       // belt hold
+
+   //------------------------------------------------------
+   // Helper values (inline functions not allowed in MQL4)
+   //------------------------------------------------------
+   bool isWhite_c1 = Close[c1] > Open[c1];
+   bool isWhite_c0 = Close[c0] > Open[c0];
+   bool isBlack_c1 = Open[c1] > Close[c1];
+   bool isBlack_c0 = Open[c0] > Close[c0];
+   
+   double realBody_c0 = MathAbs(Close[c0] - Open[c0]);
+   
+   double upperShadow_c0 = High[c0] - MathMax(Open[c0], Close[c0]);
+   double lowerShadow_c0 = MathMin(Open[c0], Close[c0]) - Low[c0];
+
+   //------------------------------------------------------
+   // Media BodyLong
+   //------------------------------------------------------
+   double bodyLongAvg = 0;
+   for(int i=0; i<BodyLongPeriod; i++)
+   {
+      int idx = shift + i;
+      if(idx >= Bars) break;
+      bodyLongAvg += MathAbs(Close[idx] - Open[idx]);
+   }
+   bodyLongAvg /= BodyLongPeriod;
+
+   //------------------------------------------------------
+   // Media ShadowVeryShort
+   //------------------------------------------------------
+   double shadowAvg = 0;
+   for(int j=0; j<ShadowVeryShortPeriod; j++)
+   {
+      int idx = shift + j;
+      if(idx >= Bars) break;
+      double upShadow = High[idx] - MathMax(Open[idx], Close[idx]);
+      double loShadow = MathMin(Open[idx], Close[idx]) - Low[idx];
+      shadowAvg += (upShadow + loShadow) / 2.0;
+   }
+   shadowAvg /= ShadowVeryShortPeriod;
+
+   //------------------------------------------------------
+   // Media Equal (usata per open uguali)
+   //------------------------------------------------------
+   double equalAvg = 0;
+   for(int k=0; k<EqualPeriod; k++)
+   {
+      int idx = shift + 1 + k;
+      if(idx >= Bars) break;
+      equalAvg += MathAbs(Close[idx] - Open[idx]);
+   }
+   equalAvg /= EqualPeriod;
+
+   //------------------------------------------------------
+   // Condizioni Separating Lines
+   //------------------------------------------------------
+   bool opposite =
+      (isWhite_c1 && isBlack_c0) ||
+      (isBlack_c1 && isWhite_c0);
+
+   bool sameOpen =
+      Open[c0] <= Open[c1] + equalAvg &&
+      Open[c0] >= Open[c1] - equalAvg;
+
+   bool longBody =
+      realBody_c0 > bodyLongAvg;
+
+   bool beltHold =
+      (isWhite_c0 && lowerShadow_c0 < shadowAvg) ||
+      (isBlack_c0 && upperShadow_c0 < shadowAvg);
+
+   //------------------------------------------------------
+   // Output
+   //------------------------------------------------------
+   if(opposite && sameOpen && longBody && beltHold)
+   {
+      if(isWhite_c0) return  1;  // bullish
+      if(isBlack_c0) return -1;  // bearish
+   }
+
+   return 0;
+}
 
 //+------------------------------------------------------------------+
 //| CDLTASUKIGAP Pattern Detection Function                          |
