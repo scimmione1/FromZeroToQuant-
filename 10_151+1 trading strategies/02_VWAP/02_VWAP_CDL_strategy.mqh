@@ -1151,15 +1151,15 @@ int CDLLADDERBOTTOM(int shift = 0)
 //+------------------------------------------------------------------+
 //| CDLMATCHINGLOW Pattern Detection Function                        |
 //+------------------------------------------------------------------+
-bool CDLMATCHINGLOW(int i, double tolerancePoints = 0.0)
+bool CDLMATCHINGLOW(int shift = 0, double tolerancePoints = 0.0)
 {
-   // Need at least two candles: i and i+1
-   if(i+1 >= Bars) return false;
+   // Need at least two candles: shift and shift+1
+   if(Bars < shift + 2) return false;
 
-   double o0 = Open[i];
-   double c0 = Close[i];
-   double o1 = Open[i+1];
-   double c1 = Close[i+1];
+   double o0 = Open[shift];
+   double c0 = Close[shift];
+   double o1 = Open[shift+1];
+   double c1 = Close[shift+1];
 
    // 1. Both candles must be bearish
    bool black0 = (c0 < o0);
@@ -1178,8 +1178,8 @@ bool CDLMATCHINGLOW(int i, double tolerancePoints = 0.0)
       return false;
 
    // 3. Downtrend filter (SMA50)
-   double sma50 = iMA(NULL, 0, 50, 0, MODE_SMA, PRICE_CLOSE, i+1);
-   if(Close[i+1] > sma50)
+   double sma50 = iMA(NULL, 0, 50, 0, MODE_SMA, PRICE_CLOSE, shift+1);
+   if(Close[shift+1] > sma50)
       return false;
 
    return true;
