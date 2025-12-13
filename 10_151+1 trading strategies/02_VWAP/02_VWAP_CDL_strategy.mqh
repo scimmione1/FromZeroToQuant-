@@ -86,10 +86,11 @@ void CloseAllPositions()
       if (OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
       {
          int type = OrderType();
+         bool result;
          if (type == OP_BUY)
-            OrderClose(OrderTicket(), OrderLots(), Bid, 3, clrRed);
+            result = OrderClose(OrderTicket(), OrderLots(), Bid, 3, clrRed);
          else if (type == OP_SELL)
-            OrderClose(OrderTicket(), OrderLots(), Ask, 3, clrRed);
+            result = OrderClose(OrderTicket(), OrderLots(), Ask, 3, clrRed);
       }
    }
 }
@@ -101,31 +102,32 @@ void GetActiveCandlePattern(bool &isBullish)
 {
    isBullish = false;
 
-   if(CDLHAMMER && iCandlestickPattern(NULL,0,0) == 1) isBullish = true;
-   else if(CDLINVERTEDHAMMER && iCandlestickPattern(NULL,0,0) == 2) isBullish = true;
-   else if(CDLMORNINGSTAR && iCandlestickPattern(NULL,0,0) == 3) isBullish = true;
-   else if(CDLMORNINGDOJISTAR && iCandlestickPattern(NULL,0,0) == 4) isBullish = true;
-   else if(CDLENGULFING && iCandlestickPattern(NULL,0,0) == 5) isBullish = true;
-   else if(CDLPIERCING && iCandlestickPattern(NULL,0,0) == 6) isBullish = true;
-   else if(CDLHARAMI && iCandlestickPattern(NULL,0,0) == 7) isBullish = true;
-   else if(CDLHARAMICROSS && iCandlestickPattern(NULL,0,0) == 8) isBullish = true;
-   else if(CDLTAKURI && iCandlestickPattern(NULL,0,0) == 9) isBullish = true;
-   else if(CDL3WHITESOLDIERS && iCandlestickPattern(NULL,0,0) == 10) isBullish = true;
-   else if(CDLRISEFALL3METHODS && iCandlestickPattern(NULL,0,0) == 11) isBullish = true;
-   else if(CDLMATHOLD && iCandlestickPattern(NULL,0,0) == 12) isBullish = true;
-   else if(CDLSEPARATINGLINES && iCandlestickPattern(NULL,0,0) == 13) isBullish = true;
-   else if(CDLTASUKIGAP && iCandlestickPattern(NULL,0,0) == 14) isBullish = true;
-   else if(CDLABANDONEDBABY && iCandlestickPattern(NULL,0,0) == 15) isBullish = true;
-   else if(CDLLADDERBOTTOM && iCandlestickPattern(NULL,0,0) == 16) isBullish = true;
-   else if(CDLMATCHINGLOW && iCandlestickPattern(NULL,0,0) == 17) isBullish = true;
-   else if(CDLUNIQUE3RIVER && iCandlestickPattern(NULL,0,0) == 18) isBullish = true;
-   else if(CDL3INSIDE && iCandlestickPattern(NULL,0,0) == 19) isBullish = true;
-   else if(CDL3OUTSIDE && iCandlestickPattern(NULL,0,0) == 20) isBullish = true;
-   else if(CDBELTHOLD && iCandlestickPattern(NULL,0,0) == 21) isBullish = true;
-   else if(CDLBREAKAWAY && iCandlestickPattern(NULL,0,0) == 22) isBullish = true;
-   else if(CDLKICKING && iCandlestickPattern(NULL,0,0) == 23) isBullish = true;
-   else if(CDLKICKINGBYLENGTH && iCandlestickPattern(NULL,0,0) == 24) isBullish = true;
-   else if(CDLSTICKSANDWICH && iCandlestickPattern(NULL,0,0) == 25) isBullish = true;
+   // Check each enabled pattern using the actual pattern detection functions
+   if(CDLHAMMER && CDLHAMMER(0)) isBullish = true;
+   else if(CDLINVERTEDHAMMER && CDLINVERTEDHAMMER(0)) isBullish = true;
+   else if(CDLMORNINGSTAR && CDLMORNINGSTAR(0)) isBullish = true;
+   else if(CDLMORNINGDOJISTAR && CDLMORNINGDOJISTAR(0)) isBullish = true;
+   else if(CDLENGULFING && CDLENGULFING(0)) isBullish = true;
+   else if(CDLPIERCING && CDLPIERCING(0)) isBullish = true;
+   else if(CDLHARAMI && CDLHARAMI(0)) isBullish = true;
+   else if(CDLHARAMICROSS && CDLHaramicrossBullish(0)) isBullish = true;
+   else if(CDLTAKURI && CDLTAKURI(0)) isBullish = true;
+   else if(CDL3WHITESOLDIERS && CDL3WHITESOLDIERS(0)) isBullish = true;
+   else if(CDLRISEFALL3METHODS && CDLRISEFALL3METHODS(0)) isBullish = true;
+   else if(CDLMATHOLD && CDLMATHOLD(0) == 1) isBullish = true;
+   else if(CDLSEPARATINGLINES && CDLSEPARATINGLINES(0) == 1) isBullish = true;
+   else if(CDLTASUKIGAP && CDLTASUKIGAP(0)) isBullish = true;
+   else if(CDLABANDONEDBABY && CDLABANDONEDBABY(0)) isBullish = true;
+   else if(CDLLADDERBOTTOM && CDLLADDERBOTTOM(0) == 1) isBullish = true;
+   else if(CDLMATCHINGLOW && CDLMATCHINGLOW(0)) isBullish = true;
+   else if(CDLUNIQUE3RIVER && CDLUNIQUE3RIVER(0) == 1) isBullish = true;
+   else if(CDL3INSIDE && CDL3INSIDE(0)) isBullish = true;
+   else if(CDL3OUTSIDE && CDL3OUTSIDEUP(0)) isBullish = true;
+   else if(CDBELTHOLD && CDBELTHOLD(0) == 1) isBullish = true;
+   else if(CDLBREAKAWAY && CDLBREAKAWAY(0) == 1) isBullish = true;
+   else if(CDLKICKING && CDLKICKING(0) == 1) isBullish = true;
+   else if(CDLKICKINGBYLENGTH && CDLKICKINGBYLENGTH(0) == 1) isBullish = true;
+   else if(CDLSTICKSANDWICH && CDLSTICKSANDWICH(0) == 1) isBullish = true;
    // Add other patterns as needed
 
    return ;
@@ -1959,22 +1961,20 @@ void OnTick()
       bool isBullish = false;
       GetActiveCandlePattern(isBullish);
 
-
-    // === Calculate ATR, SL, TP and Lot Size ===
-    double atr = iATR(NULL, 0, ATR_Period, 0);
-    double sl = Bid - ATR_Mult_SL * atr;
-    double tp = Bid + ATR_Mult_TP * atr;
-    double lot = CalculateLotSize(sl);
-
-
+      if(isBullish)
+      {
+         // === Calculate ATR, SL, TP and Lot Size ===
+         double atr = iATR(NULL, 0, ATR_Period, 0);
+         double sl = Bid - ATR_Mult_SL * atr;
+         double tp = Bid + ATR_Mult_TP * atr;
+         double lot = CalculateLotSize(sl);
 
          RefreshRates();
          int ticket = OrderSend(Symbol(), OP_BUY, lot, Ask, Slippage, sl, tp,
-                                "Gap Up Buy", MagicNumber, 0, clrGreen);
+                                "VWAP CDL Buy", MagicNumber, 0, clrGreen);
 
          if(ticket > 0)
-            Print("✓ Trade opened. Gap=", DoubleToString(gapPct*100,2),
-                  "% ATR=", DoubleToString(atr,5),
+            Print("✓ Trade opened. ATR=", DoubleToString(atr,5),
                   " SL=", DoubleToString(sl,5),
                   " TP=", DoubleToString(tp,5),
                   " Lot=", DoubleToString(lot,2));
