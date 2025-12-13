@@ -5,7 +5,6 @@
 
 // === Parameters generali ===
 extern int    MagicNumber       = 257;      // Magic Number EA
-//extern double AccountRisk       = 0.01;     // Account risk per trade
 extern double RiskPercent       = 1.0;      // % risk per trade
 extern double MaxLot            = 0.1;      // Maximum allowed lot
 extern bool UseFixedLot         = true;     // true = use fixed lot, false = percentage calculation
