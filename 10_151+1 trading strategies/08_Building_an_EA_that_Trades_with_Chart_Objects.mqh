@@ -9,7 +9,6 @@ CTrade trade;
 
 int MagicNumber = 266;
 
-input string down_trend = ""; // Down Trend Line
 input string up_trend = ""; // Up Trend Line
 input ENUM_TIMEFRAMES time_frame = PERIOD_CURRENT; // TIME FRAME
 
@@ -42,11 +41,6 @@ double open_price[];
 double low_price[];
 double high_price[];
 datetime time_price[];
-
-double td_line_value;
-double td1_line_value;
-double td2_line_value;
-double td3_line_value;
 
 datetime lastTradeBarTime = 0;
 double ask_price;
@@ -95,7 +89,6 @@ void OnDeinit(const int reason)
 void OnTick()
   {
 //---
-   ObjectSetInteger(chart_id,down_trend,OBJPROP_RAY_RIGHT,true);
    ObjectSetInteger(chart_id,up_trend,OBJPROP_RAY_RIGHT,true);
 
    CopyOpen(_Symbol, time_frame, 1, 5, open_price);
