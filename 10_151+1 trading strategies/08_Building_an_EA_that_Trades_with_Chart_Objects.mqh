@@ -72,8 +72,7 @@ int OnInit()
    ArraySetAsSeries(low_price, true);
    ArraySetAsSeries(high_price, true);
    ArraySetAsSeries(time_price, true);
-   
-   
+
    trade.SetExpertMagicNumber(MagicNumber);
 
 //---
@@ -324,8 +323,9 @@ void OnTick()
       && (line_exe == break_out || line_exe == reverse_break)
      )
      {
-      take_profit = MathAbs(ask_price - ((high_price[0] - ask_price) * 4));
-      trade.Sell(GetLotSize(),_Symbol,ask_price,high_price[0], take_profit);
-      lastTradeBarTime = currentBarTime;
+      take_profit = MathAbs(ask_price + ((ask_price - low_price[0]) * 4));
+
+      trade.Buy(GetLotSize(), _Symbol, ask_price, low_price[0],take_profit);
+      lastTradeBarTime = currentBarTime; // Update last trade bar time to avoid duplicate signals
      }
   }
