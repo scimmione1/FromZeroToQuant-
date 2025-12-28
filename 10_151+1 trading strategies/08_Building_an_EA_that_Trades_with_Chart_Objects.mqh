@@ -14,9 +14,13 @@ input string up_trend = ""; // Up Trend Line
 input ENUM_TIMEFRAMES time_frame = PERIOD_CURRENT; // TIME FRAME
 
 /*
-TO DO:
-delete sell orders, keep only buy
-
+Issue	Before	After
+Trend line references	td1_line_value, td2_line_value (down_trend)	t1_line_value, t2_line_value (up_trend)
+Object reference	down_trend	up_trend
+Previous touch check	Bearish candles (close < open)	Bullish candles (close > open && close > line)
+Breakout confirmation	Bearish close below line	Bullish close above line
+Retest condition	Price breaking down through line	Price touching line from above (low <= line && open > line)
+Entry confirmation	Bearish candle below line	Bullish candle closing above line
 */
 
 input bool use_int_lot = false; // Use Integer Lot Size (Stocks)
@@ -25,7 +29,7 @@ input double lot_size_double = 0.02; // LOT SIZE (Double for Forex)
 
 enum line_type
   {
-   reversal = 0, //REVERSAL
+   //reversal = 0, //REVERSAL
    break_out = 1, //BREAK-OUT
    reverse_break = 2 // REVERSAL AND BREAK-OUT
   };
@@ -286,11 +290,13 @@ void OnTick()
      }
      
 // UPTREND BREAKOUT AND RETEST
+// Descending trend line breakout: price breaks above, retests from above, bullish confirmation = Buy
    bool prev_touch_break_out_up = false;
 
-   if((high_price[1] > td1_line_value && close_price[1] < open_price[1])
+   // Check if a recent breakout-retest interaction already occurred (to avoid duplicate trades)
+   if((low_price[1] < t1_line_value && close_price[1] > open_price[1] && close_price[1] > t1_line_value)
       ||
-      (high_price[2] > td2_line_value && close_price[2] < open_price[2])
+      (low_price[2] < t2_line_value && close_price[2] > open_price[2] && close_price[2] > t2_line_value)
      )
      {
       prev_touch_break_out_up = true;
@@ -298,34 +304,54 @@ void OnTick()
 
    int no_bars_up_break_out = 0;
 
+   // Find the breakout candle: high pierced above the line, open was below (initial breakout)
    for(int i = 0; i <= 3; i++)
      {
-      if(high_price[i] > ObjectGetValueByTime(chart_id,down_trend,time_price[i],0) && open_price[i] < ObjectGetValueByTime(chart_id,down_trend,time_price[i],0)
-        )
+      if(high_price[i] > ObjectGetValueByTime(chart_id, up_trend, time_price[i], 0) && 
+         open_price[i] < ObjectGetValueByTime(chart_id, up_trend, time_price[i], 0))
         {
+         // Look for confirming bullish candle that closed above the line
          for(int j = i; j >= 0; j--)
            {
-            if(close_price[j] < open_price[j] && close_price[j] < ObjectGetValueByTime(chart_id,down_trend,time_price[j],0))
+            if(close_price[j] > open_price[j] && 
+               close_price[j] > ObjectGetValueByTime(chart_id, up_trend, time_price[j], 0))
               {
-               no_bars_up_break_out = Bars(_Symbol,time_frame,time_price[j],TimeCurrent());
+               no_bars_up_break_out = Bars(_Symbol, time_frame, time_price[j], TimeCurrent());
                break;
               }
            }
          break;
         }
      }
-   if(((high_price[1] >= t1_line_value && open_price[1] < t1_line_value) || (high_price[2] >= t2_line_value && open_price[2] < t2_line_value)
-       || (high_price[3] >= t3_line_value && open_price[3] < t3_line_value) || (high_price[0] >= t_line_value))
-      && (close_price[0] < t_line_value && close_price[0] < open_price[0] && open_price[1] < t1_line_value)
-      && (no_bars_up_break_out < 3)
-      && (no_bars_up_break_out == false)
-      && (currentBarTime != lastTradeBarTime)
-      && (line_exe == break_out || line_exe == reverse_break)
+
+   // Entry condition: retest touch from above + bullish confirmation
+   if(
+      // Retest: low touches/pierces the line from above (open was above line)
+      ((low_price[0] <= t_line_value && open_price[0] > t_line_value) ||
+       (low_price[1] <= t1_line_value && open_price[1] > t1_line_value) ||
+       (low_price[2] <= t2_line_value && open_price[2] > t2_line_value) ||
+       (low_price[3] <= t3_line_value && open_price[3] > t3_line_value))
+      &&
+      // Bullish confirmation: current candle is bullish and closed above the line
+      (close_price[0] > open_price[0]) && close_price[0] > t_line_value
+      &&
+      // Not too many bars since last breakout setup
+      (no_bars_up_break_out < 3)
+      &&
+      // No recent breakout touch already recorded
+      (prev_touch_break_out_up == false)
+      &&
+      // One trade per candle
+      (currentBarTime != lastTradeBarTime)
+      &&
+      // Mode allows breakout trades
+      (line_exe == break_out || line_exe == reverse_break)
      )
      {
+      // TP = 1:4 risk-reward ratio based on distance from entry to SL
       take_profit = MathAbs(ask_price + ((ask_price - low_price[0]) * 4));
 
-      trade.Buy(GetLotSize(), _Symbol, ask_price, low_price[0],take_profit);
-      lastTradeBarTime = currentBarTime; // Update last trade bar time to avoid duplicate signals
+      trade.Buy(GetLotSize(), _Symbol, ask_price, low_price[0], take_profit);
+      lastTradeBarTime = currentBarTime;
      }
   }
