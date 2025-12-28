@@ -15,13 +15,13 @@ input ENUM_TIMEFRAMES time_frame = PERIOD_CURRENT; // TIME FRAME
 
 /*
 TO DO:
-Add Stocks Version with int LOT SIZE
 delete sell orders, keep only buy
 
 */
 
-//input int lot_size = 10; // LOT SIZE
-input double lot_size = 0.02; // LOT SIZE
+input bool use_int_lot = false; // Use Integer Lot Size (Stocks)
+input int lot_size_int = 10; // LOT SIZE (Integer for Stocks)
+input double lot_size_double = 0.02; // LOT SIZE (Double for Forex)
 
 enum line_type
   {
@@ -52,6 +52,14 @@ double t_line_value;
 double t1_line_value;
 double t2_line_value;
 double t3_line_value;
+
+//+------------------------------------------------------------------+
+//| Get lot size based on user selection                             |
+//+------------------------------------------------------------------+
+double GetLotSize()
+  {
+   return use_int_lot ? (double)lot_size_int : lot_size_double;
+  }
 
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
@@ -274,7 +282,7 @@ void OnTick()
      {
       take_profit = MathAbs(ask_price + ((ask_price - low_price[0]) * 4));
 
-      trade.Buy(lot_size, _Symbol, ask_price, low_price[0],take_profit);
+      trade.Buy(GetLotSize(), _Symbol, ask_price, low_price[0],take_profit);
       lastTradeBarTime = currentBarTime; // Update last trade bar time to avoid duplicate signals
      }
      
@@ -317,7 +325,7 @@ void OnTick()
      )
      {
       take_profit = MathAbs(ask_price - ((high_price[0] - ask_price) * 4));
-      trade.Sell(lot_size,_Symbol,ask_price,high_price[0], take_profit);
+      trade.Sell(GetLotSize(),_Symbol,ask_price,high_price[0], take_profit);
       lastTradeBarTime = currentBarTime;
      }
   }
