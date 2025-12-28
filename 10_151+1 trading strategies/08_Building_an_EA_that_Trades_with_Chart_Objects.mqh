@@ -98,6 +98,16 @@ void OnTick()
    CopyTime(_Symbol, time_frame, 1, 5, time_price);
 
 // UP TREND
+/*
+// UP TREND — Support Bounce
+Scenario: Price bounces OFF the trend line (line acts as support)
+
+Aspect	Logic
+Detection	low_price < line && open_price > line
+Meaning	Candle opened above line, wick dipped below, then closed back above
+Pattern	Price testing support and bouncing
+Mode	Only when line_exe == reverse_break
+*/
    ask_price = SymbolInfoDouble(_Symbol,SYMBOL_ASK);
    datetime currentBarTime = iTime(_Symbol, time_frame, 0);
    
@@ -158,6 +168,19 @@ void OnTick()
      }
      
 // UPTREND BREAKOUT AND RETEST
+/*
+// UPTREND BREAKOUT AND RETEST — Resistance Breakout
+Scenario: Price breaks THROUGH the trend line, then retests it (line flips from resistance → support)
+
+Aspect	Logic
+Breakout Detection	high_price > line && open_price < line
+Meaning	Candle opened below line, broke above (initial breakout)
+Retest Detection	low_price <= line && open_price > line
+Meaning	After breakout, price comes back to touch line from above (retest)
+Mode	When line_exe == break_out OR line_exe == reverse_break
+Visual (matches your image):
+*/
+
 // Descending trend line breakout: price breaks above, retests from above, bullish confirmation = Buy
    bool prev_touch_break_out_up = false;
 
@@ -223,3 +246,12 @@ void OnTick()
       lastTradeBarTime = currentBarTime;
      }
   }
+
+  /*
+Summary
+Feature	UP TREND	UPTREND BREAKOUT AND RETEST
+Line role	Support	Resistance → becomes Support
+Entry type	Bounce	Break + Retest + Confirm
+Requires prior breakout	No	Yes (high pierced above line)
+Best for	Ascending support lines	Descending resistance lines
+  */
