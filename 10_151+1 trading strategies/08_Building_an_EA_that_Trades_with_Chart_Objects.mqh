@@ -161,8 +161,8 @@ Mode	Only when line_exe == reverse_break
       prev_touch_up == false
       &&
       (currentBarTime != lastTradeBarTime)
-       && 
-       (line_exe == reverse_break)
+      && 
+      (line_exe == reverse_break)
    )
      {
       take_profit = MathAbs(ask_price + ((ask_price - low_price[0]) * 4));
