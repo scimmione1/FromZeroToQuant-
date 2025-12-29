@@ -1,9 +1,4 @@
 date,nft_purchases_count,unique_transactions,date_dt,day_of_week,week_number,month
-2025-06-27,0,0,2025-06-27,Friday,26,June
-2025-06-28,0,0,2025-06-28,Saturday,26,June
-2025-06-29,0,0,2025-06-29,Sunday,26,June
-2025-06-30,0,0,2025-06-30,Monday,27,June
-2025-07-01,0,0,2025-07-01,Tuesday,27,July
 2025-07-02,0,0,2025-07-02,Wednesday,27,July
 2025-07-03,0,0,2025-07-03,Thursday,27,July
 2025-07-04,0,0,2025-07-04,Friday,27,July
@@ -38,11 +33,11 @@ date,nft_purchases_count,unique_transactions,date_dt,day_of_week,week_number,mon
 2025-08-02,0,0,2025-08-02,Saturday,31,August
 2025-08-03,0,0,2025-08-03,Sunday,31,August
 2025-08-04,0,0,2025-08-04,Monday,32,August
-2025-08-05,13,13,2025-08-05,Tuesday,32,August
-2025-08-06,29,29,2025-08-06,Wednesday,32,August
-2025-08-07,30,30,2025-08-07,Thursday,32,August
-2025-08-08,31,31,2025-08-08,Friday,32,August
-2025-08-09,46,46,2025-08-09,Saturday,32,August
+2025-08-05,0,0,2025-08-05,Tuesday,32,August
+2025-08-06,0,0,2025-08-06,Wednesday,32,August
+2025-08-07,0,0,2025-08-07,Thursday,32,August
+2025-08-08,0,0,2025-08-08,Friday,32,August
+2025-08-09,37,37,2025-08-09,Saturday,32,August
 2025-08-10,50,50,2025-08-10,Sunday,32,August
 2025-08-11,45,45,2025-08-11,Monday,33,August
 2025-08-12,36,36,2025-08-12,Tuesday,33,August
@@ -179,4 +174,9 @@ date,nft_purchases_count,unique_transactions,date_dt,day_of_week,week_number,mon
 2025-12-21,44,44,2025-12-21,Sunday,51,December
 2025-12-22,42,42,2025-12-22,Monday,52,December
 2025-12-23,32,32,2025-12-23,Tuesday,52,December
-2025-12-24,0,0,2025-12-24,Wednesday,52,December
+2025-12-24,25,25,2025-12-24,Wednesday,52,December
+2025-12-25,25,25,2025-12-25,Thursday,52,December
+2025-12-26,23,23,2025-12-26,Friday,52,December
+2025-12-27,11,11,2025-12-27,Saturday,52,December
+2025-12-28,22,22,2025-12-28,Sunday,52,December
+2025-12-29,32,32,2025-12-29,Monday,1,December
