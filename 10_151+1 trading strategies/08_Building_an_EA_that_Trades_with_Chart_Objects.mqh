@@ -13,6 +13,10 @@ input string up_trend = ""; // Up Trend Line
 input ENUM_TIMEFRAMES time_frame = PERIOD_CURRENT; // TIME FRAME
 
 /*
+Original Idea taken from https://www.mql5.com/en/articles/19968
+*/
+
+/*
 Issue	Before	After
 Trend line references	td1_line_value, td2_line_value (down_trend)	t1_line_value, t2_line_value (up_trend)
 Object reference	down_trend	up_trend
