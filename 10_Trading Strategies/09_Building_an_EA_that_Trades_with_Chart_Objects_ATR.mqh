@@ -9,7 +9,7 @@ CTrade trade;
 
 input int MagicNumber = 266;
 
-input string up_trend = ""; // Up Trend Line
+input string up_trend = "H1 Trendline 41032"; // Up Trend Line
 input ENUM_TIMEFRAMES time_frame = PERIOD_CURRENT; // TIME FRAME
 
 /*
