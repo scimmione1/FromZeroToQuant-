@@ -1,5 +1,5 @@
 //+------------------------------------------------------------------+
-//|                              Project 17 Trend Line Object EA.mq4 |
+//|                          Project 17 Trend Line Object EA ATR.mq4 |
 //+------------------------------------------------------------------+
 #property copyright ""
 #property link      ""
