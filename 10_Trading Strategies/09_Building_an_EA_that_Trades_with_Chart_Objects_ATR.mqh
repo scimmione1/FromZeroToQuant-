@@ -30,6 +30,11 @@ input bool use_int_lot = false;       // Use Integer Lot Size (Stocks)
 input int lot_size_int = 10;          // LOT SIZE (Integer for Stocks)
 input double lot_size_double = 0.02;  // LOT SIZE (Double for Forex)
 
+// === Dynamic ATR Parameters ===
+input int    ATR_Period        = 14;       // ATR Period
+input double ATR_Mult_SL       = 2.0;      // ATR Multiplier for Stop Loss
+input double ATR_Mult_TP       = 3.0;      // ATR Multiplier for Take Profit
+
 enum line_type
   {
    //reversal = 0, //REVERSAL
