@@ -53,7 +53,6 @@ datetime time_price[];
 
 datetime lastTradeBarTime = 0;
 double ask_price;
-double take_profit;
 
 double t_line_value;
 double t1_line_value;
