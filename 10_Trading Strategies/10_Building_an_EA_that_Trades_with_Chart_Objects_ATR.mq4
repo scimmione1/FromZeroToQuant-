@@ -36,9 +36,9 @@ input double ATR_Mult_TP       = 3.0;      // ATR Multiplier for Take Profit
 
 enum line_type
   {
-   //reversal = 0, //REVERSAL
-   break_out = 1, //BREAK-OUT
-   reverse_break = 2 // REVERSAL AND BREAK-OUT
+   //reversal = 0,    //REVERSAL
+   break_out = 1,     //BREAK-OUT
+   reverse_break = 2  // REVERSAL AND BREAK-OUT
   };
 input line_type line_exe =  reverse_break; // MODE
 
