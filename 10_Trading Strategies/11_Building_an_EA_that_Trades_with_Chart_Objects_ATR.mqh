@@ -7,7 +7,7 @@
 #include <Trade/Trade.mqh>
 CTrade trade;
 
-input int MagicNumber = 266;
+input int MagicNumber = 267;
 
 input string resistance_line = "H1 Horizontal Line 58065"; // Horizontal Resistance Line
 input ENUM_TIMEFRAMES time_frame = PERIOD_CURRENT; // TIME FRAME
